@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SineKritik — Türkçe Film Eleştirmeni</title>
+  <meta name="theme-color" content="#0b0f19" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cinema: {
+              bg: '#0b0f19',
+              surface: '#111827',
+              card: '#161f33',
+              border: '#25314d',
+              gold: '#f5c518',
+              tomato: '#fa320a',
+              fresh: '#22c55e',
+              accent: '#e11d48'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .hero-glow {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(225, 29, 72, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(245, 197, 24, 0.14), transparent 40%),
+        linear-gradient(180deg, #111827 0%, #0b0f19 100%);
+    }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #0b0f19; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #25314d; border-radius: 9999px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Üst Menü -->
+  <header class="sticky top-0 z-30 backdrop-blur-md bg-cinema-bg/85 border-b border-cinema-border/70">
+    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-600 to-amber-500 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-rose-900/30">
+          S
+        </div>
+        <div>
+          <h1 class="text-lg font-extrabold tracking-tight text-white leading-none">SineKritik</h1>
+          <p class="text-[11px] text-slate-400 mt-0.5">Canlı IMDb &amp; Rotten Tomatoes Eleştirmeni</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="openWatchlistBtn" type="button"
+          class="px-3 py-1.5 rounded-lg bg-cinema-card border border-cinema-border hover:border-slate-500 text-xs font-medium text-slate-200 flex items-center gap-1.5 transition">
+          <span>Listem</span>
+          <span id="watchlistCount" class="px-1.5 py-0.5 rounded-md bg-rose-600/25 text-rose-300 text-[11px] font-bold">0</span>
+        </button>
+        <button id="openSettingsBtn" type="button"
+          class="px-3 py-1.5 rounded-lg bg-cinema-card border border-cinema-border hover:border-slate-500 text-xs font-medium text-slate-300 transition">
+          Ayarlar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik -->
+  <main class="flex-1">
+    <!-- Arama & Ruh Hali Alanı -->
+    <section class="hero-glow border-b border-cinema-border/60">
+      <div class="max-w-4xl mx-auto px-4 py-8 sm:py-10 space-y-5">
+        <div class="text-center max-w-2xl mx-auto">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Bu film izlemeye değer mi?
+          </h2>
+          <p class="text-sm text-slate-300 mt-2">
+            Film adını yaz veya bugünkü ruh halini seç; güncel IMDb, Rotten Tomatoes puanlarını, Türkçe eleştiriyi ve yüksek puanlı benzer filmleri anında gör.
+          </p>
+        </div>
+
+        <!-- Film Arama Formu -->
+        <form id="searchForm" class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-2.5">
+          <input id="movieInput" type="text" autocomplete="off"
+            placeholder="Film adı yazın (örn: Parazit, Başlangıç, Past Lives, Kış Uykusu...)"
+            class="flex-1 px-4 py-3.5 rounded-xl bg-cinema-surface/95 border border-cinema-border focus:border-rose-500 focus:outline-none text-white placeholder-slate-400 text-sm shadow-inner" />
+          <button id="searchBtn" type="submit"
+            class="px-6 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-[0.99] text-white font-semibold text-sm transition shadow-lg shadow-rose-900/30 whitespace-nowrap">
+            Eleştiriyi Getir
+          </button>
+        </form>
+
+        <!-- Ruh Haline Göre Canlı Keşif -->
+        <div class="max-w-2xl mx-auto rounded-2xl bg-cinema-surface/80 border border-cinema-border/80 p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">
+              Bugünkü Ruh Haline Göre Film Seç
+            </span>
+            <label class="inline-flex items-center gap-2 text-xs text-slate-300 cursor-pointer select-none">
+              <input id="hiddenGemToggle" type="checkbox" checked class="accent-amber-400 rounded" />
+              <span>Az bilinen yüksek puanlı gizli hazineler</span>
+            </label>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="moodInput" type="text" autocomplete="off"
+              placeholder="Ruh halini yaz (örn: hüzünlü, romantik, heyecanlı, gerilim, yorgun, motive, düşünceli...)"
+              class="flex-1 px-3.5 py-2.5 rounded-xl bg-cinema-bg/90 border border-cinema-border focus:border-amber-400 focus:outline-none text-sm text-white placeholder-slate-400" />
+            <button id="moodBtn" type="button"
+              class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition whitespace-nowrap">
+              Ruh Halime Göre Öner
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" data-mood="hüzünlü" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Hüzünlü</button>
+            <button type="button" data-mood="romantik" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Romantik</button>
+            <button type="button" data-mood="heyecanlı" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Heyecanlı</button>
+            <button type="button" data-mood="gerilim" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Gerilim</button>
+            <button type="button" data-mood="düşünceli" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Düşünceli</button>
+            <button type="button" data-mood="motive" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Motive</button>
+            <button type="button" data-mood="yorgun" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Yorgun / Kafa Dağıtmalık</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Durum / Yükleniyor Mesajı -->
+    <section class="max-w-4xl mx-auto px-4 pt-6">
+      <div id="statusBox" class="hidden rounded-xl border px-4 py-3 text-sm"></div>
+    </section>
+
+    <!-- Film Sonuç Kartı -->
+    <section id="resultSection" class="hidden max-w-4xl mx-auto px-4 py-6 space-y-6">
+
+      <!-- Ruh Hali Yenileme Şeridi (Sadece ruh hali önerisinde görünür) -->
+      <div id="moodBanner" class="hidden flex flex-wrap items-center justify-between gap-3 rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3">
+        <div class="text-sm text-amber-200">
+          <span class="font-semibold">Ruh Hali Önerisi:</span>
+          <span id="moodBannerText"></span>
+        </div>
+        <button id="anotherMoodBtn" type="button"
+          class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition">
+          Başka Öneri Getir ↻
+        </button>
+      </div>
+
+      <!-- Ana Film Kartı -->
+      <article class="rounded-2xl bg-cinema-surface border border-cinema-border overflow-hidden shadow-2xl shadow-black/40">
+        <!-- Opsiyonel Arka Plan Görseli + Başlık & Afiş -->
+        <div id="movieHeroHeader" class="relative p-5 sm:p-7 border-b border-cinema-border/80 bg-cinema-surface">
+          <div id="movieBackdrop" class="hidden absolute inset-0 bg-cover bg-center opacity-20 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-cinema-surface via-cinema-surface/85 to-cinema-surface/65 pointer-events-none"></div>
+
+          <div class="relative flex flex-col sm:flex-row gap-5 sm:gap-6 items-start">
+            <!-- Film Afişi -->
+            <div class="w-36 sm:w-44 shrink-0 mx-auto sm:mx-0">
+              <div class="aspect-[2/3] rounded-xl overflow-hidden border border-cinema-border bg-cinema-card shadow-xl shadow-black/50 flex items-center justify-center relative">
+                <img id="moviePoster" src="" alt="Film Afişi"
+                  class="hidden w-full h-full object-cover" />
+                <div id="moviePosterFallback" class="flex flex-col items-center justify-center text-center p-4 text-slate-400">
+                  <svg class="w-10 h-10 text-slate-600 mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" />
+                  </svg>
+                  <span class="text-[11px]">Afiş bulunamadı</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Başlık, Meta ve Eleştirmen Kararı -->
+            <div class="flex-1 w-full space-y-4">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div class="space-y-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span id="sourceBadge" class="px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold">Canlı Veri</span>
+                    <span id="movieYear" class="text-xs text-slate-400 font-medium"></span>
+                    <span id="movieRuntime" class="text-xs text-slate-400"></span>
+                  </div>
+                  <h3 id="movieTitle" class="text-2xl sm:text-3xl font-extrabold text-white leading-tight"></h3>
+                  <p id="movieOriginalTitle" class="text-xs text-slate-400 hidden"></p>
+                  <div id="movieGenres" class="flex flex-wrap gap-1.5 pt-1"></div>
+                </div>
+
+                <!-- 100 Üzerinden Karar Rozeti -->
+                <div class="flex items-center gap-3 bg-cinema-card/90 border border-cinema-border rounded-2xl px-4 py-3 shrink-0">
+                  <div class="text-center">
+                    <div id="verdictScore" class="text-3xl font-black leading-none text-emerald-400">--</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 mt-1">/ 100 Puan</div>
+                  </div>
+                  <div class="h-10 w-px bg-cinema-border"></div>
+                  <div>
+                    <div id="verdictLabel" class="text-sm font-bold text-white">--</div>
+                    <div id="verdictSub" class="text-[11px] text-slate-400">SineKritik Kararı</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Yönetmen ve Başrol Oyuncuları -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div class="rounded-xl bg-cinema-card/85 border border-cinema-border/80 px-3.5 py-2.5">
+                  <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Yönetmen</div>
+                  <div id="movieDirector" class="text-sm font-semibold text-white mt-0.5">—</div>
+                </div>
+                <div class="rounded-xl bg-cinema-card/85 border border-cinema-border/80 px-3.5 py-2.5">
+                  <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Başrol Oyuncuları</div>
+                  <div id="movieCast" class="text-sm font-semibold text-white mt-0.5">—</div>
+                </div>
+              </div>
+
+              <!-- Dış Bağlantılar & İzleme Listesi -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <button id="toggleWatchlistBtn" type="button"
+                  class="px-3.5 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-200 transition">
+                  + İzleme Listeme Ekle
+                </button>
+                <a id="imdbLink" href="#" target="_blank" rel="noopener noreferrer"
+                  class="hidden px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-semibold transition">
+                  IMDb'de Aç ↗
+                </a>
+                <a id="rtLink" href="#" target="_blank" rel="noopener noreferrer"
+                  class="px-3 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-semibold transition">
+                  RT'de Aç ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puan Kartları ve Eleştirmen Merceği -->
+        <div class="p-5 sm:p-7 space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- IMDb -->
+            <div class="rounded-xl bg-cinema-card border border-cinema-border p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-amber-400">IMDb Puanı</div>
+                <div id="imdbScore" class="text-2xl font-black text-white mt-1">—</div>
+                <div id="imdbVotes" class="text-[11px] text-slate-400 mt-0.5"></div>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-amber-400/15 text-amber-400 flex items-center justify-center font-black text-sm">
+                ★
+              </div>
+            </div>
+
+            <!-- Rotten Tomatoes -->
+            <div class="rounded-xl bg-cinema-card border border-cinema-border p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-rose-400">Rotten Tomatoes</div>
+                <div id="rtScore" class="text-2xl font-black text-white mt-1">—</div>
+                <div id="rtSub" class="text-[11px] text-slate-400 mt-0.5"></div>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center font-black text-sm">
+                🍅
+              </div>
+            </div>
+
+            <!-- Eleştirmen Merceği Seçici -->
+            <div class="rounded-xl bg-cinema-card border border-cinema-border p-4 flex flex-col justify-between">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-300">Puanlama Merceği</div>
+              <div class="grid grid-cols-3 gap-1 mt-2">
+                <button type="button" data-lens="balanced" class="lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition">Dengeli</button>
+                <button type="button" data-lens="critic" class="lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition">Eleştirmen</button>
+                <button type="button" data-lens="audience" class="lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition">İzleyici</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kısa Özet -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Filmin Konusu</h4>
+            <p id="moviePlot" class="text-sm sm:text-[15px] leading-relaxed text-slate-200"></p>
+          </div>
+
+          <!-- Eleştirmen Yorumu -->
+          <div class="rounded-xl bg-gradient-to-br from-cinema-card to-slate-900 border border-cinema-border p-4 sm:p-5 space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-400">SineKritik Değerlendirmesi</span>
+            </div>
+            <p id="movieCriticNote" class="text-sm leading-relaxed text-slate-200"></p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Yüksek Puanlı Benzer Filmler -->
+      <section id="similarSection" class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-slate-300">
+            Benzer Yüksek Puanlı Filmler
+          </h4>
+          <span class="text-xs text-slate-400">Canlı öneriler (7.1+ filtreli)</span>
+        </div>
+        <div id="similarGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3.5"></div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Alt Bilgi -->
+  <footer class="mt-12 border-t border-cinema-border/60 bg-cinema-surface/50">
+    <div class="max-w-4xl mx-auto px-4 py-6 text-center space-y-2">
+      <p class="text-xs text-slate-400">
+        SineKritik — TMDb ve OMDb canlı verileriyle çalışan Türkçe film eleştirmeni.
+      </p>
+      <p class="text-[11px] leading-relaxed text-slate-500 max-w-2xl mx-auto">
+        Bu uygulama Ali Emre Altıntaş tarafından geliştirilmiştir. © 2026 Tüm hakları saklıdır. Uygulamanın arayüzü, yazılımı ve özgün içerikleri izinsiz kopyalanamaz, çoğaltılamaz veya başka platformlarda kullanılamaz.
+      </p>
+    </div>
+  </footer>
+
+  <!-- İzleme Listesi Modalı -->
+  <div id="watchlistModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md max-h-[80vh] flex flex-col rounded-2xl bg-cinema-surface border border-cinema-border shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-cinema-border flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">İzleme Listem</h3>
+        <button type="button" data-close-modal="watchlistModal" class="px-2.5 py-1 rounded-lg text-slate-400 hover:bg-cinema-card hover:text-white">✕</button>
+      </div>
+      <div id="watchlistBody" class="flex-1 overflow-y-auto p-5 space-y-2.5 scrollbar-thin"></div>
+    </div>
+  </div>
+
+  <!-- Ayarlar Modalı -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-cinema-surface border border-cinema-border shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-cinema-border flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Canlı API Ayarları</h3>
+        <button type="button" data-close-modal="settingsModal" class="px-2.5 py-1 rounded-lg text-slate-400 hover:bg-cinema-card hover:text-white">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Varsayılan API anahtarları uygulamaya gömülüdür; paylaştığın kişiler hiçbir ayar yapmadan doğrudan kullanabilir. İstersen buradan kendi anahtarlarınla değiştirebilirsin.
+        </p>
+        <div class="space-y-1.5">
+          <label for="tmdbKeyInput" class="text-xs font-semibold text-slate-300">TMDb API Key (v3 veya v4 Token)</label>
+          <input id="tmdbKeyInput" type="text" placeholder="TMDb anahtarı..."
+            class="w-full px-3 py-2 rounded-xl bg-cinema-bg border border-cinema-border text-xs text-white focus:border-rose-500 focus:outline-none" />
+        </div>
+        <div class="space-y-1.5">
+          <label for="omdbKeyInput" class="text-xs font-semibold text-slate-300">OMDb API Key (IMDb &amp; Rotten Tomatoes)</label>
+          <input id="omdbKeyInput" type="text" placeholder="OMDb anahtarı..."
+            class="w-full px-3 py-2 rounded-xl bg-cinema-bg border border-cinema-border text-xs text-white focus:border-rose-500 focus:outline-none" />
+        </div>
+        <div id="testResultBox" class="hidden rounded-xl border px-3 py-2.5 text-xs"></div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="testApiBtn" type="button"
+            class="px-3.5 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-200 transition">
+            Bağlantıyı Test Et
+          </button>
+          <button id="saveApiBtn" type="button"
+            class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white transition">
+            Kaydet
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // VARSAYILAN API ANAHTARLARI (Paylaştığın kişilerde de otomatik çalışır)
+    // =========================================================================
+    const DEFAULT_TMDB_API_KEY = '921ba93bfde065e278643ffb2608343e';
+    const DEFAULT_OMDB_API_KEY = '15b7965';
+
+    // Türkçe tür eşleştirme
+    const GENRE_TR = {
+      28: 'Aksiyon', 12: 'Macera', 16: 'Animasyon', 35: 'Komedi', 80: 'Suç',
+      99: 'Belgesel', 18: 'Dram', 10751: 'Aile', 14: 'Fantastik', 36: 'Tarih',
+      27: 'Korku', 10402: 'Müzik', 9648: 'Gizem', 10749: 'Romantik',
+      878: 'Bilim Kurgu', 10770: 'TV Filmi', 53: 'Gerilim', 10752: 'Savaş', 37: 'Western'
+    };
+
+    // Çevrimdışı / yedek mini katalog
+    const FALLBACK_MOVIES = [
+      {
+        id: 'past-lives', title: 'Başka Bir Hayatta', originalTitle: 'Past Lives', year: 2023, runtime: '106 dk',
+        director: 'Celine Song', cast: 'Greta Lee, Teo Yoo, John Magaro',
+        genres: ['Dram', 'Romantik'], imdb: 7.8, rt: 95, rtAudience: 84, metascore: 94,
+        imdbId: 'tt13238346', posterUrl: '', backdropUrl: '',
+        plot: 'Çocukluk aşkı olan Nora ve Hae Sung, Nora’nın ailesinin Güney Kore’den Kanada’ya taşınmasıyla ayrılır. Yirmi yıl sonra New York’ta yeniden bir araya geldiklerinde kader, seçimler ve "ya şöyle olsaydı" ihtimalleriyle yüzleşirler.',
+        criticNote: 'Büyük dramatik patlamalar olmadan, tek bir bakış ve sessizlikle insanın içine işleyen zarif bir başyapıt. Hüzünlü ve romantik bir akşam için son yılların en incelikli filmi.',
+        moods: ['hüzünlü', 'romantik', 'düşünceli'],
+        similar: [
+          { title: 'Güneş Sonrası', year: 2022, imdb: 7.6, rt: 96, note: 'Sessiz, derin ve uzun süre akılda kalan duygusallık' },
+          { title: 'Alev Almış Bir Genç Kızın Portresi', year: 2019, imdb: 8.1, rt: 98, note: 'Büyüleyici görsellik ve zarif bir aşk hikayesi' },
+          { title: 'Mükemmel Günler', year: 2023, imdb: 7.9, rt: 96, note: 'Sakin ritmiyle hayatın küçük anlarına odaklanıyor' }
+        ]
+      },
+      {
+        id: 'parasite', title: 'Parazit', originalTitle: 'Parasite', year: 2019, runtime: '132 dk',
+        director: 'Bong Joon-ho', cast: 'Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong, Choi Woo-shik',
+        genres: ['Gerilim', 'Dram', 'Komedi'], imdb: 8.5, rt: 99, rtAudience: 90, metascore: 96,
+        imdbId: 'tt6751668', posterUrl: '', backdropUrl: '',
+        plot: 'Yoksul Kim ailesi, zekice bir planla zengin Park ailesinin malikanesinde tek tek iş bulur. Ancak evin içinde saklanan beklenmedik bir sır, iki aile arasındaki dengeyi geri dönülmez biçimde altüst eder.',
+        criticNote: 'Kara mizah, sınıf eleştirisi ve keskin gerilimi kusursuz bir tempoda birleştiren modern bir klasik. İlk dakikasından finaline kadar temposu bir an bile düşmüyor.',
+        moods: ['gerilim', 'heyecanlı', 'düşünceli'],
+        similar: [
+          { title: 'Bir Düşüşün Anatomisi', year: 2023, imdb: 7.7, rt: 96, note: 'Zekice kurgulanmış psikolojik gerilim ve mahkeme dramı' },
+          { title: 'Başlangıç', year: 2010, imdb: 8.8, rt: 86, note: 'Katmanlı kurgu ve yüksek tempolu zihin oyunu' },
+          { title: 'Whiplash', year: 2014, imdb: 8.5, rt: 94, note: 'Nefes kesen tempo ve yüksek psikolojik tansiyon' }
+        ]
+      },
+      {
+        id: 'holdovers', title: 'Geride Kalanlar', originalTitle: 'The Holdovers', year: 2023, runtime: '133 dk',
+        director: 'Alexander Payne', cast: 'Paul Giamatti, Da\'Vine Joy Randolph, Dominic Sessa',
+        genres: ['Komedi', 'Dram'], imdb: 7.9, rt: 97, rtAudience: 92, metascore: 82,
+        imdbId: 'tt14849194', posterUrl: '', backdropUrl: '',
+        plot: '1970 kışında huysuz bir tarih öğretmeni, Noel tatilinde eve gidemeyen zeki ama sorunlu bir öğrenci ve okulun yas tutan aşçısı boş kampüste baş başa kalır; aralarında beklenmedik, sıcacık bir bağ kurulur.',
+        criticNote: 'Hem gülümseten hem duygulandıran, 70’ler sinemasının sıcaklığını taşıyan nadir filmlerden. Yorgun bir akşamda içini ısıtacak güçlü bir karakter filmi.',
+        moods: ['yorgun', 'hüzünlü', 'motive'],
+        similar: [
+          { title: 'Mükemmel Günler', year: 2023, imdb: 7.9, rt: 96, note: 'Huzurlu, sade ve insan ruhuna iyi gelen anlatım' },
+          { title: 'Sing Street', year: 2016, imdb: 7.9, rt: 95, note: 'Müzik dolu, enerjik ve umut verici bir büyüme hikayesi' },
+          { title: 'Esaretin Bedeli', year: 1994, imdb: 9.3, rt: 89, note: 'Umut ve dostluk üzerine zamansız bir başyapıt' }
+        ]
+      },
+      {
+        id: 'kis-uykusu', title: 'Kış Uykusu', originalTitle: 'Kış Uykusu', year: 2014, runtime: '196 dk',
+        director: 'Nuri Bilge Ceylan', cast: 'Haluk Bilginer, Melisa Sözen, Demet Akbağ, Ayberk Pekcan',
+        genres: ['Dram'], imdb: 8.0, rt: 87, rtAudience: 84, metascore: 88,
+        imdbId: 'tt2758880', posterUrl: '', backdropUrl: '',
+        plot: 'Emekli tiyatro oyuncusu Aydın, Kapadokya’da işlettiği küçük otelde genç eşi Nihal ve kız kardeşi Necla ile yaşar. Kışın bastırmasıyla birlikte otel, bastırılmış öfkelerin ve vicdani hesaplaşmaların sahnesine dönüşür.',
+        criticNote: 'Altın Palmiye ödüllü, edebiyat tadında diyalogları ve kusursuz oyunculuklarıyla uzun süresine rağmen izleyiciyi derin bir iç hesaplaşmaya davet eden bir başyapıt.',
+        moods: ['düşünceli', 'hüzünlü'],
+        similar: [
+          { title: 'Ahlat Ağacı', year: 2018, imdb: 8.0, rt: 94, note: 'Aile, hayaller ve taşra üzerine keskin bir portre' },
+          { title: 'Bir Zamanlar Anadolu\'da', year: 2011, imdb: 7.8, rt: 92, note: 'Atmosferik, sabırlı ve hipnotik bir gece yolculuğu' },
+          { title: 'Kuru Otlar Üstüne', year: 2023, imdb: 7.7, rt: 92, note: 'İnsan doğasının gri tonlarını ustalıkla işliyor' }
+        ]
+      }
+    ];
+
+    // Ruh hali -> TMDb keşif parametreleri
+    const MOOD_PROFILES = [
+      { keys: ['hüzün', 'üzgün', 'ağla', 'melankoli', 'duygusal', 'kırgın'], label: 'Hüzünlü & Duygusal', genres: '18', minVote: 7.5 },
+      { keys: ['romantik', 'aşk', 'sevgili', 'tatlı'], label: 'Romantik', genres: '10749,18', minVote: 7.3 },
+      { keys: ['heyecan', 'aksiyon', 'macera', 'tempolu', 'adrenalin'], label: 'Heyecanlı & Tempolu', genres: '28|12|878', minVote: 7.4 },
+      { keys: ['gerilim', 'korku', 'gizem', 'polisiye', 'suç', 'karanlık'], label: 'Gerilim & Gizem', genres: '53|9648|80', minVote: 7.4 },
+      { keys: ['düşün', 'felsef', 'derin', 'sanat', 'beyin', 'akıl'], label: 'Düşünceli & Derin', genres: '18|9648|878', minVote: 7.6 },
+      { keys: ['motive', 'ilham', 'umut', 'başarı', 'güçlü', 'enerji'], label: 'Motive Edici & İlham Verici', genres: '18|36|10402', minVote: 7.5 },
+      { keys: ['yorgun', 'komedi', 'eğlen', 'kafa', 'rahat', 'keyif', 'hafif', 'gül'], label: 'Kafa Dağıtmalık & Keyifli', genres: '35|16|10751', minVote: 7.3 }
+    ];
+
+    // Uygulama Durumu
+    let currentMovie = null;
+    let currentLens = 'balanced';
+    let lastMoodQuery = '';
+    const seenMoodIds = new Set();
+
+    // Yardımcılar
+    const $ = (id) => document.getElementById(id);
+
+    function getTmdbKey() {
+      return (localStorage.getItem('sinekritik_tmdb_key') || DEFAULT_TMDB_API_KEY || '').trim();
+    }
+    function getOmdbKey() {
+      return (localStorage.getItem('sinekritik_omdb_key') || DEFAULT_OMDB_API_KEY || '').trim();
+    }
+    function getWatchlist() {
+      try { return JSON.parse(localStorage.getItem('sinekritik_watchlist') || '[]'); }
+      catch { return []; }
+    }
+    function saveWatchlist(list) {
+      localStorage.setItem('sinekritik_watchlist', JSON.stringify(list));
+      updateWatchlistBadge();
+    }
+    function updateWatchlistBadge() {
+      $('watchlistCount').textContent = String(getWatchlist().length);
+    }
+
+    function showStatus(message, type = 'info') {
+      const box = $('statusBox');
+      box.classList.remove('hidden', 'bg-rose-500/10', 'border-rose-500/30', 'text-rose-200', 'bg-slate-800/80', 'border-cinema-border', 'text-slate-200', 'bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-200');
+      if (type === 'error') {
+        box.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-200');
+      } else if (type === 'success') {
+        box.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-200');
+      } else {
+        box.classList.add('bg-slate-800/80', 'border-cinema-border', 'text-slate-200');
+      }
+      box.textContent = message;
+    }
+    function hideStatus() {
+      $('statusBox').classList.add('hidden');
+    }
+
+    // TMDb API Çağrısı (v3 API Key veya v4 Bearer Token otomatik algılar)
+    async function tmdbFetch(path, params = {}) {
+      const key = getTmdbKey();
+      if (!key) throw new Error('TMDb API anahtarı bulunamadı.');
+      const url = new URL(`https://api.themoviedb.org/3${path}`);
+      const headers = { accept: 'application/json' };
+      const isBearer = key.length > 40 && key.includes('.');
+      if (isBearer) {
+        headers.Authorization = `Bearer ${key}`;
+      } else {
+        url.searchParams.set('api_key', key);
+      }
+      for (const [k, v] of Object.entries(params)) {
+        if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, String(v));
+      }
+      const res = await fetch(url.toString(), { headers });
+      if (!res.ok) throw new Error(`TMDb isteği başarısız oldu (${res.status}).`);
+      return res.json();
+    }
+
+    // OMDb API Çağrısı (IMDb + Rotten Tomatoes + Metascore)
+    async function omdbFetch({ imdbId, title, year }) {
+      const key = getOmdbKey();
+      if (!key) return null;
+      const url = new URL('https://www.omdbapi.com/');
+      url.searchParams.set('apikey', key);
+      url.searchParams.set('tomatoes', 'true');
+      if (imdbId) {
+        url.searchParams.set('i', imdbId);
+      } else if (title) {
+        url.searchParams.set('t', title);
+        if (year) url.searchParams.set('y', String(year));
+      } else {
+        return null;
+      }
+      try {
+        const res = await fetch(url.toString());
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data.Response === 'False') return null;
+        return data;
+      } catch {
+        return null;
+      }
+    }
+
+    function extractOmdbRatings(omdb) {
+      if (!omdb) return { imdb: null, imdbVotes: '', rt: null, metascore: null, poster: '', actors: '', director: '' };
+      const imdb = omdb.imdbRating && omdb.imdbRating !== 'N/A' ? parseFloat(omdb.imdbRating) : null;
+      const imdbVotes = omdb.imdbVotes && omdb.imdbVotes !== 'N/A' ? omdb.imdbVotes : '';
+      let rt = null;
+      if (Array.isArray(omdb.Ratings)) {
+        const rtObj = omdb.Ratings.find(r => r.Source === 'Rotten Tomatoes');
+        if (rtObj && rtObj.Value) {
+          const parsed = parseInt(rtObj.Value.replace('%', ''), 10);
+          if (!Number.isNaN(parsed)) rt = parsed;
+        }
+      }
+      if (rt === null && omdb.tomatoMeter && omdb.tomatoMeter !== 'N/A') {
+        const parsed = parseInt(omdb.tomatoMeter, 10);
+        if (!Number.isNaN(parsed)) rt = parsed;
+      }
+      let metascore = null;
+      if (omdb.Metascore && omdb.Metascore !== 'N/A') {
+        const parsed = parseInt(omdb.Metascore, 10);
+        if (!Number.isNaN(parsed)) metascore = parsed;
+      }
+      const poster = omdb.Poster && omdb.Poster !== 'N/A' ? omdb.Poster : '';
+      const actors = omdb.Actors && omdb.Actors !== 'N/A' ? omdb.Actors : '';
+      const director = omdb.Director && omdb.Director !== 'N/A' ? omdb.Director : '';
+      return { imdb, imdbVotes, rt, metascore, poster, actors, director };
+    }
+
+    // İngilizce özeti otomatik Türkçeye çevirme (TMDb TR özeti boşsa)
+    async function translateToTurkish(text) {
+      if (!text || text.trim().length < 5) return '';
+      try {
+        const snippet = text.slice(0, 480);
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(snippet)}&langpair=en|tr`);
+        if (!res.ok) return '';
+        const data = await res.json();
+        const translated = data?.responseData?.translatedText || '';
+        if (translated && !translated.toUpperCase().includes('MYMEMORY WARNING')) {
+          return translated;
+        }
+      } catch {}
+      return '';
+    }
+
+    // Puan Hesaplama & Eleştirmen Merceği
+    function computeVerdict(movie, lens = 'balanced') {
+      const imdb100 = movie.imdb ? movie.imdb * 10 : null;
+      const critic100 = movie.rt !== null && movie.rt !== undefined
+        ? movie.rt
+        : (movie.metascore !== null && movie.metascore !== undefined ? movie.metascore : null);
+
+      let score = 75;
+      if (imdb100 !== null && critic100 !== null) {
+        if (lens === 'critic') score = Math.round(critic100 * 0.72 + imdb100 * 0.28);
+        else if (lens === 'audience') score = Math.round(imdb100 * 0.75 + critic100 * 0.25);
+        else score = Math.round(imdb100 * 0.52 + critic100 * 0.48);
+      } else if (imdb100 !== null) {
+        score = Math.round(imdb100);
+      } else if (critic100 !== null) {
+        score = Math.round(critic100);
+      }
+
+      score = Math.max(10, Math.min(99, score));
+      let label = 'Ortalama';
+      let colorClass = 'text-amber-400';
+      if (score >= 86) { label = 'Kaçırılmamalı'; colorClass = 'text-emerald-400'; }
+      else if (score >= 76) { label = 'İzlemeye Değer'; colorClass = 'text-emerald-300'; }
+      else if (score >= 65) { label = 'Şans Verilebilir'; colorClass = 'text-amber-300'; }
+      else { label = 'Beklentiyi Düşük Tut'; colorClass = 'text-rose-400'; }
+
+      return { score, label, colorClass };
+    }
+
+    function buildTurkishCriticNote(movie, verdict) {
+      if (movie.criticNote) return movie.criticNote;
+      const genreText = movie.genres.length ? movie.genres.slice(0, 2).join(' ve ').toLowerCase() : 'sinema';
+      const scoreParts = [];
+      if (movie.imdb) scoreParts.push(`IMDb'de ${movie.imdb.toFixed(1)}`);
+      if (movie.rt !== null && movie.rt !== undefined) scoreParts.push(`Rotten Tomatoes'ta %${movie.rt}`);
+      else if (movie.metascore) scoreParts.push(`Metacritic'te ${movie.metascore}/100`);
+
+      const leadText = scoreParts.length ? `${scoreParts.join(' ve ')} puanlarıyla öne çıkan yapım, ` : '';
+      if (verdict.score >= 85) {
+        return `${leadText}${genreText} türünde hem eleştirmenlerden hem izleyicilerden tam not alan güçlü bir film. Yönetmen ${movie.director !== '—' ? movie.director + ' imzasını taşıyan ' : ''}bu yapımı izleme listene gönül rahatlığıyla ekleyebilirsin.`;
+      }
+      if (verdict.score >= 75) {
+        return `${leadText}${genreText} sevenler için tatmin edici, dengeli ve sürükleyici bir tercih. Akşam keyifli ve nitelikli bir film arıyorsan beklentini karşılayacaktır.`;
+      }
+      if (verdict.score >= 65) {
+        return `${leadText}türün meraklılarına hitap eden, kusurlarına rağmen izlenebilir bir yapım. Özellikle ${movie.cast !== '—' ? 'oyuncu kadrosunu' : 'bu türü'} seviyorsan şans verebilirsin.`;
+      }
+      return `${leadText}eleştirmenleri ve izleyicileri ikiye bölen bir yapım. Sadece konusuna ya da kadrosuna özel ilgin varsa değerlendirmeni öneririm.`;
+    }
+
+    // TMDb Film Detayını Tam Paket Olarak Çek (Afiş + Oyuncular + OMDb + Yüksek Puanlı Benzerler)
+    async function fetchFullMovieByTmdbId(tmdbId) {
+      const [trDetail, enDetail] = await Promise.all([
+        tmdbFetch(`/movie/${tmdbId}`, { language: 'tr-TR', append_to_response: 'credits,external_ids,recommendations,similar' }),
+        tmdbFetch(`/movie/${tmdbId}`, { language: 'en-US' }).catch(() => null)
+      ]);
+
+      const imdbId = trDetail.imdb_id || trDetail.external_ids?.imdb_id || enDetail?.imdb_id || '';
+      const year = (trDetail.release_date || enDetail?.release_date || '').slice(0, 4);
+      const originalTitle = trDetail.original_title || enDetail?.title || trDetail.title;
+
+      const omdbRaw = await omdbFetch({ imdbId, title: originalTitle, year });
+      const omdb = extractOmdbRatings(omdbRaw);
+
+      // Yönetmen
+      const crew = trDetail.credits?.crew || [];
+      const directors = crew.filter(c => c.job === 'Director').map(c => c.name);
+      const director = directors.length ? directors.slice(0, 2).join(', ') : (omdb.director || '—');
+
+      // Başrol Oyuncuları (İlk 4 başrol)
+      const castArr = (trDetail.credits?.cast || []).slice(0, 4).map(c => c.name);
+      const cast = castArr.length ? castArr.join(', ') : (omdb.actors || '—');
+
+      // Görseller (Afiş + Arka Plan)
+      const posterUrl = trDetail.poster_path
+        ? `https://image.tmdb.org/t/p/w500${trDetail.poster_path}`
+        : (enDetail?.poster_path ? `https://image.tmdb.org/t/p/w500${enDetail.poster_path}` : omdb.poster);
+      const backdropUrl = trDetail.backdrop_path
+        ? `https://image.tmdb.org/t/p/w1280${trDetail.backdrop_path}`
+        : (enDetail?.backdrop_path ? `https://image.tmdb.org/t/p/w1280${enDetail.backdrop_path}` : '');
+
+      // Türkçe Konu Özeti
+      let plot = (trDetail.overview || '').trim();
+      if (!plot && enDetail?.overview) {
+        plot = await translateToTurkish(enDetail.overview);
+      }
+      if (!plot) {
+        const gNames = (trDetail.genres || []).map(g => g.name).slice(0, 2).join(', ');
+        plot = `${trDetail.title}, ${year || 'yakın dönem'} yapımı${gNames ? ` bir ${gNames.toLowerCase()} filmi` : ' dikkat çekici bir sinema yapımı'}. Yönetmen koltuğunda ${director} oturuyor.`;
+      }
+
+      const genres = (trDetail.genres || []).map(g => GENRE_TR[g.id] || g.name).filter(Boolean);
+      const imdbScore = omdb.imdb || (trDetail.vote_average ? Number(trDetail.vote_average.toFixed(1)) : null);
+
+      // Yüksek Puanlı Benzer Filmler (TMDb recommendations öncelikli, >= 7.1 ve >= 200 oy)
+      const recList = trDetail.recommendations?.results || [];
+      const simList = trDetail.similar?.results || [];
+      const merged = [];
+      const seenSim = new Set([trDetail.id]);
+      for (const item of [...recList, ...simList]) {
+        if (!item || seenSim.has(item.id)) continue;
+        seenSim.add(item.id);
+        merged.push(item);
+      }
+
+      let filteredSim = merged.filter(m => (m.vote_average || 0) >= 7.1 && (m.vote_count || 0) >= 200);
+      if (filteredSim.length < 3) {
+        filteredSim = merged.filter(m => (m.vote_average || 0) >= 6.8 && (m.vote_count || 0) >= 80);
+      }
+      filteredSim.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+      const topSimilarRaw = filteredSim.slice(0, 3);
+
+      // Benzer filmlerin canlı OMDb IMDb/RT puanlarını paralel çek
+      const similar = await Promise.all(topSimilarRaw.map(async (m) => {
+        const sYear = (m.release_date || '').slice(0, 4);
+        const sOmdbRaw = await omdbFetch({ title: m.original_title || m.title, year: sYear });
+        const sOmdb = extractOmdbRatings(sOmdbRaw);
+        const sGenres = (m.genre_ids || []).map(id => GENRE_TR[id]).filter(Boolean).slice(0, 2).join(' • ');
+        return {
+          tmdbId: m.id,
+          title: m.title || m.original_title,
+          year: sYear,
+          imdb: sOmdb.imdb || (m.vote_average ? Number(m.vote_average.toFixed(1)) : null),
+          rt: sOmdb.rt,
+          posterUrl: m.poster_path ? `https://image.tmdb.org/t/p/w300${m.poster_path}` : (sOmdb.poster || ''),
+          note: sGenres || 'Yüksek puanlı benzer yapım'
+        };
+      }));
+
+      return {
+        id: `tmdb-${trDetail.id}`,
+        tmdbId: trDetail.id,
+        imdbId,
+        title: trDetail.title || originalTitle,
+        originalTitle,
+        year: year || '—',
+        runtime: trDetail.runtime ? `${trDetail.runtime} dk` : '',
+        director,
+        cast,
+        genres,
+        imdb: imdbScore,
+        imdbVotes: omdb.imdbVotes,
+        imdbFromOmdb: Boolean(omdb.imdb),
+        rt: omdb.rt,
+        metascore: omdb.metascore,
+        posterUrl,
+        backdropUrl,
+        plot,
+        criticNote: '',
+        sourceLabel: 'Canlı Veri (TMDb + OMDb)',
+        similar
+      };
+    }
+
+    // Film Arama
+    async function searchMovie(query) {
+      const clean = query.trim();
+      if (!clean) return;
+      $('moodBanner').classList.add('hidden');
+      showStatus(`"${clean}" için canlı veriler, afiş ve puanlar getiriliyor...`, 'info');
+
+      try {
+        const searchRes = await tmdbFetch('/search/movie', { query: clean, language: 'tr-TR', include_adult: 'false' });
+        let results = searchRes.results || [];
+        if (!results.length) {
+          const enSearch = await tmdbFetch('/search/movie', { query: clean, language: 'en-US', include_adult: 'false' });
+          results = enSearch.results || [];
+        }
+        if (!results.length) {
+          const fb = FALLBACK_MOVIES.find(m =>
+            m.title.toLowerCase().includes(clean.toLowerCase()) ||
+            m.originalTitle.toLowerCase().includes(clean.toLowerCase())
+          );
+          if (fb) {
+            renderMovie(fb);
+            hideStatus();
+            return;
+          }
+          showStatus(`"${clean}" adıyla eşleşen bir film bulunamadı. Orijinal veya Türkçe adını kontrol edip tekrar deneyebilirsin.`, 'error');
+          return;
+        }
+
+        // En alakalı ve oy sayısı anlamlı ilk sonucu seç
+        const best = results.find(r => (r.vote_count || 0) >= 30) || results[0];
+        const fullMovie = await fetchFullMovieByTmdbId(best.id);
+        renderMovie(fullMovie);
+        hideStatus();
+      } catch (err) {
+        const fb = FALLBACK_MOVIES.find(m =>
+          m.title.toLowerCase().includes(clean.toLowerCase()) ||
+          m.originalTitle.toLowerCase().includes(clean.toLowerCase())
+        );
+        if (fb) {
+          renderMovie({ ...fb, sourceLabel: 'Çevrimdışı Yedek Veri' });
+          showStatus('Canlı bağlantıda geçici bir sorun oluştu; yedek kayıt gösteriliyor.', 'error');
+        } else {
+          showStatus(`Veri çekilirken bir hata oluştu: ${err.message}`, 'error');
+        }
+      }
+    }
+
+    // Ruh Haline Göre Canlı Keşif
+    async function recommendByMood(moodText) {
+      const raw = (moodText || '').trim();
+      if (!raw) {
+        showStatus('Lütfen bugünkü ruh halini yaz veya aşağıdaki etiketlerden birini seç.', 'error');
+        return;
+      }
+      lastMoodQuery = raw;
+      const lower = raw.toLowerCase();
+      const profile = MOOD_PROFILES.find(p => p.keys.some(k => lower.includes(k))) || {
+        label: raw,
+        genres: '18|35|53',
+        minVote: 7.4
+      };
+      const hiddenGemsOnly = $('hiddenGemToggle').checked;
+
+      showStatus(`"${profile.label}" ruh haline uygun yüksek puanlı film internetten seçiliyor...`, 'info');
+
+      try {
+        const randomPage = Math.floor(Math.random() * 12) + 1;
+        const params = {
+          language: 'tr-TR',
+          sort_by: 'vote_average.desc',
+          include_adult: 'false',
+          'vote_average.gte': profile.minVote,
+          'vote_count.gte': hiddenGemsOnly ? 180 : 500,
+          'primary_release_date.gte': hiddenGemsOnly ? '2012-01-01' : '1990-01-01',
+          with_genres: profile.genres,
+          page: randomPage
+        };
+        if (hiddenGemsOnly) {
+          params['vote_count.lte'] = 5000;
+        }
+
+        let discover = await tmdbFetch('/discover/movie', params);
+        let pool = (discover.results || []).filter(m => !seenMoodIds.has(m.id));
+
+        if (!pool.length) {
+          discover = await tmdbFetch('/discover/movie', { ...params, page: 1 });
+          pool = (discover.results || []).filter(m => !seenMoodIds.has(m.id));
+        }
+        if (!pool.length) {
+          seenMoodIds.clear();
+          pool = discover.results || [];
+        }
+
+        if (!pool.length) {
+          throw new Error('Bu filtreyle yeni film bulunamadı.');
+        }
+
+        const picked = pool[Math.floor(Math.random() * Math.min(pool.length, 10))];
+        seenMoodIds.add(picked.id);
+
+        const fullMovie = await fetchFullMovieByTmdbId(picked.id);
+        renderMovie(fullMovie);
+
+        $('moodBannerText').textContent = `${profile.label}${hiddenGemsOnly ? ' • Gizli Hazine Modu' : ''}`;
+        $('moodBanner').classList.remove('hidden');
+        hideStatus();
+      } catch (err) {
+        const fallbackPick = FALLBACK_MOVIES[Math.floor(Math.random() * FALLBACK_MOVIES.length)];
+        renderMovie({ ...fallbackPick, sourceLabel: 'Çevrimdışı Yedek Öneri' });
+        $('moodBannerText').textContent = `${profile.label} (Yedek Öneri)`;
+        $('moodBanner').classList.remove('hidden');
+        showStatus('Canlı keşif sırasında geçici bir sorun oluştu; yedek öneri gösterildi.', 'error');
+      }
+    }
+
+    // Ekrana Çizme
+    function renderMovie(movie) {
+      currentMovie = movie;
+      $('resultSection').classList.remove('hidden');
+
+      $('sourceBadge').textContent = movie.sourceLabel || 'Canlı Veri';
+      $('movieYear').textContent = movie.year || '';
+      $('movieRuntime').textContent = movie.runtime ? `• ${movie.runtime}` : '';
+      $('movieTitle').textContent = movie.title;
+
+      if (movie.originalTitle && movie.originalTitle.toLowerCase() !== movie.title.toLowerCase()) {
+        $('movieOriginalTitle').textContent = `Orijinal adı: ${movie.originalTitle}`;
+        $('movieOriginalTitle').classList.remove('hidden');
+      } else {
+        $('movieOriginalTitle').classList.add('hidden');
+      }
+
+      // Afiş & Arka Plan Görseli
+      const posterImg = $('moviePoster');
+      const posterFallback = $('moviePosterFallback');
+      const backdropDiv = $('movieBackdrop');
+
+      if (movie.posterUrl) {
+        posterImg.src = movie.posterUrl;
+        posterImg.alt = `${movie.title} afişi`;
+        posterImg.classList.remove('hidden');
+        posterFallback.classList.add('hidden');
+        posterImg.onerror = () => {
+          posterImg.classList.add('hidden');
+          posterFallback.classList.remove('hidden');
+        };
+      } else {
+        posterImg.src = '';
+        posterImg.classList.add('hidden');
+        posterFallback.classList.remove('hidden');
+      }
+
+      if (movie.backdropUrl) {
+        backdropDiv.style.backgroundImage = `url('${movie.backdropUrl}')`;
+        backdropDiv.classList.remove('hidden');
+      } else {
+        backdropDiv.style.backgroundImage = '';
+        backdropDiv.classList.add('hidden');
+      }
+
+      // Türler
+      $('movieGenres').innerHTML = (movie.genres || []).map(g =>
+        `<span class="px-2.5 py-0.5 rounded-md bg-cinema-card border border-cinema-border text-[11px] font-medium text-slate-300">${g}</span>`
+      ).join('');
+
+      // Yönetmen & Başrol Oyuncuları
+      $('movieDirector').textContent = movie.director || '—';
+      $('movieCast').textContent = movie.cast || '—';
+
+      // IMDb & RT Puanları
+      $('imdbScore').textContent = movie.imdb ? `${Number(movie.imdb).toFixed(1)} / 10` : 'Veri yok';
+      $('imdbVotes').textContent = movie.imdbVotes
+        ? `${movie.imdbVotes} oy`
+        : (movie.imdbFromOmdb === false ? 'TMDb izleyici puanı' : '');
+
+      if (movie.rt !== null && movie.rt !== undefined) {
+        $('rtScore').textContent = `%${movie.rt}`;
+        $('rtSub').textContent = movie.rt >= 60 ? 'Taze (Eleştirmen)' : 'Çürük (Eleştirmen)';
+      } else if (movie.metascore) {
+        $('rtScore').textContent = `${movie.metascore} / 100`;
+        $('rtSub').textContent = 'Metascore (RT verisi yok)';
+      } else {
+        $('rtScore').textContent = 'Veri yok';
+        $('rtSub').textContent = 'RT sayfasından kontrol edebilirsin';
+      }
+
+      // Dış Linkler
+      const imdbLink = $('imdbLink');
+      if (movie.imdbId) {
+        imdbLink.href = `https://www.imdb.com/title/${movie.imdbId}/`;
+        imdbLink.classList.remove('hidden');
+      } else {
+        imdbLink.classList.add('hidden');
+      }
+      const rtSearchName = encodeURIComponent(movie.originalTitle || movie.title);
+      $('rtLink').href = `https://www.rottentomatoes.com/search?search=${rtSearchName}`;
+
+      // Konu Özeti
+      $('moviePlot').textContent = movie.plot;
+
+      // Karar Puanı & Mercek
+      updateVerdictUI();
+      updateWatchlistButton();
+
+      // Benzer Filmler
+      const simGrid = $('similarGrid');
+      const simList = movie.similar || [];
+      if (simList.length) {
+        $('similarSection').classList.remove('hidden');
+        simGrid.innerHTML = simList.map((s, idx) => `
+          <button type="button" data-similar-idx="${idx}"
+            class="text-left rounded-xl bg-cinema-surface hover:bg-cinema-card border border-cinema-border hover:border-rose-500/60 p-3 flex gap-3 items-start transition group">
+            <div class="w-14 aspect-[2/3] rounded-lg overflow-hidden bg-cinema-card border border-cinema-border shrink-0 flex items-center justify-center">
+              ${s.posterUrl
+                ? `<img src="${s.posterUrl}" alt="${s.title}" class="w-full h-full object-cover" onerror="this.style.display='none'" />`
+                : `<span class="text-slate-600 text-xs">🎬</span>`}
+            </div>
+            <div class="min-w-0 flex-1 space-y-1">
+              <div class="font-bold text-sm text-white group-hover:text-rose-300 truncate">${s.title}</div>
+              <div class="text-[11px] text-slate-400">${s.year || ''} ${s.note ? `• ${s.note}` : ''}</div>
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                ${s.imdb ? `<span class="px-1.5 py-0.5 rounded bg-amber-400/15 text-amber-300 text-[11px] font-bold">★ ${Number(s.imdb).toFixed(1)}</span>` : ''}
+                ${s.rt !== null && s.rt !== undefined ? `<span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-300 text-[11px] font-bold">🍅 %${s.rt}</span>` : ''}
+              </div>
+            </div>
+          </button>
+        `).join('');
+
+        simGrid.querySelectorAll('[data-similar-idx]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const item = simList[Number(btn.dataset.similarIdx)];
+            if (item.tmdbId) {
+              $('moodBanner').classList.add('hidden');
+              showStatus(`"${item.title}" getiriliyor...`, 'info');
+              fetchFullMovieByTmdbId(item.tmdbId).then(full => {
+                renderMovie(full);
+                hideStatus();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }).catch(() => searchMovie(item.title));
+            } else {
+              searchMovie(item.title);
+            }
+          });
+        });
+      } else {
+        $('similarSection').classList.add('hidden');
+      }
+    }
+
+    function updateVerdictUI() {
+      if (!currentMovie) return;
+      const verdict = computeVerdict(currentMovie, currentLens);
+      const scoreEl = $('verdictScore');
+      scoreEl.textContent = String(verdict.score);
+      scoreEl.className = `text-3xl font-black leading-none ${verdict.colorClass}`;
+      $('verdictLabel').textContent = verdict.label;
+      $('movieCriticNote').textContent = buildTurkishCriticNote(currentMovie, verdict);
+
+      document.querySelectorAll('.lens-btn').forEach(btn => {
+        const active = btn.dataset.lens === currentLens;
+        btn.className = `lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition ${
+          active ? 'bg-rose-600 text-white' : 'bg-cinema-bg text-slate-400 hover:text-white'
+        }`;
+      });
+    }
+
+    // İzleme Listesi
+    function updateWatchlistButton() {
+      if (!currentMovie) return;
+      const list = getWatchlist();
+      const exists = list.some(m => m.id === currentMovie.id);
+      const btn = $('toggleWatchlistBtn');
+      if (exists) {
+        btn.textContent = '✓ İzleme Listemde';
+        btn.classList.add('border-emerald-500/50', 'text-emerald-300');
+      } else {
+        btn.textContent = '+ İzleme Listeme Ekle';
+        btn.classList.remove('border-emerald-500/50', 'text-emerald-300');
+      }
+    }
+
+    function renderWatchlistModal() {
+      const list = getWatchlist();
+      const body = $('watchlistBody');
+      if (!list.length) {
+        body.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">İzleme listen henüz boş.</p>';
+        return;
+      }
+      body.innerHTML = list.map((item, idx) => `
+        <div class="flex items-center justify-between gap-3 rounded-xl bg-cinema-card border border-cinema-border p-3">
+          <button type="button" data-wl-open="${idx}" class="text-left flex-1 min-w-0">
+            <div class="text-sm font-bold text-white truncate hover:text-rose-300">${item.title}</div>
+            <div class="text-xs text-slate-400">${item.year || ''} ${item.imdb ? `• IMDb ${Number(item.imdb).toFixed(1)}` : ''}</div>
+          </button>
+          <button type="button" data-wl-del="${idx}" class="px-2 py-1 rounded-lg text-xs text-slate-400 hover:bg-rose-500/20 hover:text-rose-300">Sil</button>
+        </div>
+      `).join('');
+
+      body.querySelectorAll('[data-wl-open]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = list[Number(btn.dataset.wlOpen)];
+          $('watchlistModal').classList.add('hidden');
+          if (item.tmdbId) {
+            showStatus(`"${item.title}" getiriliyor...`, 'info');
+            fetchFullMovieByTmdbId(item.tmdbId).then(full => { renderMovie(full); hideStatus(); });
+          } else {
+            searchMovie(item.title);
+          }
+        });
+      });
+
+      body.querySelectorAll('[data-wl-del]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const next = getWatchlist().filter((_, i) => i !== Number(btn.dataset.wlDel));
+          saveWatchlist(next);
+          renderWatchlistModal();
+          updateWatchlistButton();
+        });
+      });
+    }
+
+    // Olay Dinleyicileri
+    $('searchForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      searchMovie($('movieInput').value);
+    });
+
+    $('moodBtn').addEventListener('click', () => recommendByMood($('moodInput').value));
+    $('moodInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        recommendByMood($('moodInput').value);
+      }
+    });
+
+    document.querySelectorAll('.mood-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        $('moodInput').value = chip.dataset.mood;
+        recommendByMood(chip.dataset.mood);
+      });
+    });
+
+    $('anotherMoodBtn').addEventListener('click', () => recommendByMood(lastMoodQuery || $('moodInput').value || 'düşünceli'));
+
+    document.querySelectorAll('.lens-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentLens = btn.dataset.lens;
+        updateVerdictUI();
+      });
+    });
+
+    $('toggleWatchlistBtn').addEventListener('click', () => {
+      if (!currentMovie) return;
+      const list = getWatchlist();
+      const exists = list.some(m => m.id === currentMovie.id);
+      if (exists) {
+        saveWatchlist(list.filter(m => m.id !== currentMovie.id));
+      } else {
+        list.unshift({
+          id: currentMovie.id,
+          tmdbId: currentMovie.tmdbId,
+          title: currentMovie.title,
+          year: currentMovie.year,
+          imdb: currentMovie.imdb
+        });
+        saveWatchlist(list);
+      }
+      updateWatchlistButton();
+    });
+
+    $('openWatchlistBtn').addEventListener('click', () => {
+      renderWatchlistModal();
+      $('watchlistModal').classList.remove('hidden');
+    });
+
+    $('openSettingsBtn').addEventListener('click', () => {
+      $('tmdbKeyInput').value = getTmdbKey();
+      $('omdbKeyInput').value = getOmdbKey();
+      $('testResultBox').classList.add('hidden');
+      $('settingsModal').classList.remove('hidden');
+    });
+
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => $(btn.dataset.closeModal).classList.add('hidden'));
+    });
+
+    $('saveApiBtn').addEventListener('click', () => {
+      localStorage.setItem('sinekritik_tmdb_key', $('tmdbKeyInput').value.trim());
+      localStorage.setItem('sinekritik_omdb_key', $('omdbKeyInput').value.trim());
+      $('settingsModal').classList.add('hidden');
+      showStatus('API ayarları kaydedildi.', 'success');
+    });
+
+    $('testApiBtn').addEventListener('click', async () => {
+      const box = $('testResultBox');
+      box.className = 'rounded-xl border border-cinema-border bg-cinema-bg px-3 py-2.5 text-xs text-slate-300';
+      box.textContent = 'TMDb ve OMDb bağlantıları test ediliyor...';
+      box.classList.remove('hidden');
+
+      localStorage.setItem('sinekritik_tmdb_key', $('tmdbKeyInput').value.trim());
+      localStorage.setItem('sinekritik_omdb_key', $('omdbKeyInput').value.trim());
+
+      const notes = [];
+      try {
+        await tmdbFetch('/configuration');
+        notes.push('TMDb: Çalışıyor ✓');
+      } catch (e) {
+        notes.push(`TMDb: Hata (${e.message})`);
+      }
+
+      try {
+        const omdbTest = await omdbFetch({ imdbId: 'tt1375666' });
+        if (omdbTest) {
+          const r = extractOmdbRatings(omdbTest);
+          notes.push(`OMDb: Çalışıyor ✓ (Inception IMDb ${r.imdb || '-'}, RT %${r.rt || '-'})`);
+        } else {
+          notes.push('OMDb: Yanıt alınamadı (e-postadaki aktivasyon linkine tıklandığından emin ol).');
+        }
+      } catch {
+        notes.push('OMDb: Bağlantı hatası.');
+      }
+
+      box.textContent = notes.join(' | ');
+    });
+
+    // Başlangıç
+    updateWatchlistBadge();
+  </script>
+</body>
+</html>
