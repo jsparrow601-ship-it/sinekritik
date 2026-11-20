@@ -1,0 +1,2925 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SineKritik — Türkçe Film Eleştirmeni</title>
+  <meta name="theme-color" content="#0b0f19" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="SineKritik" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link id="faviconLink" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23e11d48'/%3E%3Cstop offset='100%25' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='%230b0f19'/%3E%3Crect x='56' y='56' width='400' height='400' rx='88' fill='url(%23g)'/%3E%3Ctext x='256' y='342' text-anchor='middle' font-family='Arial,sans-serif' font-weight='900' font-size='260' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E" />
+  <link id="appleTouchIcon" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23e11d48'/%3E%3Cstop offset='100%25' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='112' fill='%230b0f19'/%3E%3Crect x='56' y='56' width='400' height='400' rx='88' fill='url(%23g)'/%3E%3Ctext x='256' y='342' text-anchor='middle' font-family='Arial,sans-serif' font-weight='900' font-size='260' fill='%23ffffff'%3ES%3C/text%3E%3C/svg%3E" />
+  <link id="pwaManifestLink" rel="manifest" href="" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          },
+          colors: {
+            cinema: {
+              bg: '#0b0f19',
+              surface: '#111827',
+              card: '#161f33',
+              border: '#25314d',
+              gold: '#f5c518',
+              tomato: '#fa320a',
+              fresh: '#22c55e',
+              accent: '#e11d48'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .hero-glow {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(225, 29, 72, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(245, 197, 24, 0.14), transparent 40%),
+        linear-gradient(180deg, #111827 0%, #0b0f19 100%);
+    }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #0b0f19; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #25314d; border-radius: 9999px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Üst Menü -->
+  <header class="sticky top-0 z-30 backdrop-blur-md bg-cinema-bg/85 border-b border-cinema-border/70">
+    <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-600 to-amber-500 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-rose-900/30 shrink-0">
+          S
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-lg font-extrabold tracking-tight text-white leading-none truncate">SineKritik</h1>
+          <p class="text-[11px] text-slate-400 mt-0.5 truncate">Canlı IMDb &amp; Rotten Tomatoes Eleştirmeni</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="openWatchlistBtn" type="button"
+          class="px-3 py-1.5 rounded-lg bg-cinema-card border border-cinema-border hover:border-slate-500 text-xs font-medium text-slate-200 flex items-center gap-1.5 transition">
+          <span>Listem</span>
+          <span id="watchlistCount" class="px-1.5 py-0.5 rounded-md bg-rose-600/25 text-rose-300 text-[11px] font-bold">0</span>
+        </button>
+        <button id="openSettingsBtn" type="button"
+          class="px-3 py-1.5 rounded-lg bg-cinema-card border border-cinema-border hover:border-slate-500 text-xs font-medium text-slate-300 transition">
+          Ayarlar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Ana İçerik -->
+  <main class="flex-1">
+    <!-- Arama, Ruh Hali & 2 Kişilik Ortak Film Seçimi -->
+    <section class="hero-glow border-b border-cinema-border/60">
+      <div class="max-w-4xl mx-auto px-4 py-8 sm:py-10 space-y-5">
+        <div class="text-center max-w-2xl mx-auto space-y-3">
+          <div class="inline-flex rounded-2xl bg-cinema-surface/95 p-1 border border-cinema-border shadow-lg">
+            <button id="mediaTypeMovieBtn" type="button"
+              class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow transition">
+              🎬 Film
+            </button>
+            <button id="mediaTypeTvBtn" type="button"
+              class="px-5 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white transition">
+              📺 Dizi
+            </button>
+          </div>
+          <h2 id="heroHeading" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Bu film izlemeye değer mi?
+          </h2>
+          <p id="heroSubtext" class="text-sm text-slate-300">
+            Film adını yaz, bugünkü ruh halini seç ya da iki kişilik ortak film bul; güncel IMDb, Rotten Tomatoes puanlarını, Türkiye izleme platformlarını ve yüksek puanlı benzer filmleri anında gör.
+          </p>
+        </div>
+
+        <!-- Film Arama Formu -->
+        <form id="searchForm" class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-2.5">
+          <input id="movieInput" type="text" autocomplete="off"
+            placeholder="Film adı yazın (örn: Parazit, Başlangıç, Past Lives, Kış Uykusu...)"
+            class="flex-1 px-4 py-3.5 rounded-xl bg-cinema-surface/95 border border-cinema-border focus:border-rose-500 focus:outline-none text-white placeholder-slate-400 text-sm shadow-inner" />
+          <button id="searchBtn" type="submit"
+            class="px-6 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-[0.99] text-white font-semibold text-sm transition shadow-lg shadow-rose-900/30 whitespace-nowrap">
+            Eleştiriyi Getir
+          </button>
+        </form>
+
+        <!-- Ruh Haline Göre / 2 Kişilik Ortak Keşif Kutusu -->
+        <div class="max-w-2xl mx-auto rounded-2xl bg-cinema-surface/85 border border-cinema-border/80 p-4 sm:p-5 space-y-4">
+          <!-- Mod Seçici Sekmeler -->
+          <div class="flex flex-wrap items-center justify-between gap-2.5">
+            <div class="inline-flex rounded-xl bg-cinema-bg p-1 border border-cinema-border/80">
+              <button id="tabSingleMode" type="button"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition">
+                Bugünkü Ruh Haline Göre
+              </button>
+              <button id="tabJointMode" type="button"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
+                2 Kişilik Ortak Film Seç
+              </button>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-x-3.5 gap-y-1.5">
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+                <input id="hiddenGemToggle" type="checkbox" checked class="accent-amber-400 rounded" />
+                <span>Az bilinen yüksek puanlı</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+                <input id="shortRuntimeToggle" type="checkbox" class="accent-emerald-400 rounded" />
+                <span id="shortRuntimeLabel">≤ 105 dk</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer select-none">
+                <input id="recentOnlyToggle" type="checkbox" class="accent-sky-400 rounded" />
+                <span>2018 sonrası</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TEK KİŞİLİK RUH HALİ / KONU PANELİ -->
+          <div id="singleMoodPanel" class="space-y-3">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input id="moodInput" type="text" autocomplete="off"
+                placeholder="Ruh hali, konu veya ülke sineması yaz (örn: kore filmleri, fransız, dövüş, zaman yolculuğu, hüzünlü...)"
+                class="flex-1 px-3.5 py-2.5 rounded-xl bg-cinema-bg/90 border border-cinema-border focus:border-amber-400 focus:outline-none text-sm text-white placeholder-slate-400" />
+              <button id="moodBtn" type="button"
+                class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition whitespace-nowrap">
+                Ruh Halime Göre Öner
+              </button>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" data-mood="hüzünlü" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Hüzünlü</button>
+              <button type="button" data-mood="romantik" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Romantik</button>
+              <button type="button" data-mood="heyecanlı" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Heyecanlı</button>
+              <button type="button" data-mood="dövüş" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Dövüş</button>
+              <button type="button" data-mood="gerilim" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Gerilim</button>
+              <button type="button" data-mood="düşünceli" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Düşünceli</button>
+              <button type="button" data-mood="motive" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Motive</button>
+              <button type="button" data-mood="yorgun" class="mood-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs text-slate-300 transition">Yorgun / Kafa Dağıtmalık</button>
+            </div>
+          </div>
+
+          <!-- 2 KİŞİLİK ORTAK FİLM SEÇ PANELİ -->
+          <div id="jointMoodPanel" class="hidden space-y-3">
+            <p class="text-xs text-slate-300">
+              Sınırlama olmadan istediğin konuyu, ruh halini veya ülke sinemasını yazabilirsin (örn: <em>kore filmleri</em>, <em>fransız</em>, <em>dövüş</em>, <em>intikam</em>, <em>soygun</em>, <em>uzay</em>, <em>romantik</em>...). İkisini birleştiren geniş havuzdan yüksek puanlı ortak film seçilir.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div class="space-y-1">
+                <label for="jointInput1" class="text-[11px] font-semibold uppercase tracking-wider text-rose-300">1. Kişi (Ruh hali veya serbest konu)</label>
+                <input id="jointInput1" type="text" autocomplete="off"
+                  placeholder="örn: dövüş, samuray, soygun, intikam..."
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-bg/90 border border-cinema-border focus:border-rose-400 focus:outline-none text-sm text-white placeholder-slate-400" />
+              </div>
+              <div class="space-y-1">
+                <label for="jointInput2" class="text-[11px] font-semibold uppercase tracking-wider text-sky-300">2. Kişi (Ruh hali veya serbest konu)</label>
+                <input id="jointInput2" type="text" autocomplete="off"
+                  placeholder="örn: romantik, komedi, uzay, dedektif..."
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-bg/90 border border-cinema-border focus:border-sky-400 focus:outline-none text-sm text-white placeholder-slate-400" />
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div class="flex flex-wrap gap-1.5">
+                <button type="button" data-joint1="dövüş" data-joint2="intikam" class="joint-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-[11px] text-slate-300 transition">Dövüş + İntikam</button>
+                <button type="button" data-joint1="romantik" data-joint2="bilim kurgu" class="joint-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-[11px] text-slate-300 transition">Romantik + Bilim Kurgu</button>
+                <button type="button" data-joint1="komedi" data-joint2="gerilim" class="joint-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-[11px] text-slate-300 transition">Komedi + Gerilim</button>
+                <button type="button" data-joint1="hüzünlü" data-joint2="müzik" class="joint-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-[11px] text-slate-300 transition">Hüzünlü + Müzik</button>
+                <button type="button" data-joint1="aksiyon" data-joint2="gizem" class="joint-chip px-2.5 py-1 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-[11px] text-slate-300 transition">Aksiyon + Gizem</button>
+              </div>
+              <button id="jointBtn" type="button"
+                class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-amber-500 hover:from-rose-500 hover:to-amber-400 text-white font-bold text-sm transition whitespace-nowrap shadow-lg shadow-rose-900/25">
+                Ortak Film Öner
+              </button>
+            </div>
+          </div>
+
+          <!-- Platforma Göre Filtre (Her İki Modda da Aktif) -->
+          <div class="pt-3 border-t border-cinema-border/70 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-sky-300">
+                Platform Filtresi (Türkiye)
+              </span>
+              <span id="platformFilterHint" class="text-[11px] text-slate-400">
+                İşaretlediklerin arasından önerir (boşsa tümü)
+              </span>
+            </div>
+            <div id="platformCheckboxes" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Durum / Yükleniyor Mesajı -->
+    <section class="max-w-4xl mx-auto px-4 pt-6">
+      <div id="statusBox" class="hidden rounded-xl border px-4 py-3 text-sm"></div>
+    </section>
+
+    <!-- Film Sonuç Kartı -->
+    <section id="resultSection" class="hidden max-w-4xl mx-auto px-4 py-6 space-y-6">
+
+      <!-- Öneri Yenileme Şeridi -->
+      <div id="moodBanner" class="hidden flex flex-wrap items-center justify-between gap-3 rounded-xl bg-amber-500/10 border border-amber-500/30 px-4 py-3">
+        <div class="text-sm text-amber-200">
+          <span id="moodBannerTitle" class="font-semibold">Ruh Hali Önerisi:</span>
+          <span id="moodBannerText"></span>
+        </div>
+        <button id="anotherMoodBtn" type="button"
+          class="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition whitespace-nowrap">
+          Başka Öneri Getir ↻
+        </button>
+      </div>
+
+      <!-- Ana Film Kartı -->
+      <article class="rounded-2xl bg-cinema-surface border border-cinema-border overflow-hidden shadow-2xl shadow-black/40">
+        <!-- Arka Plan Görseli + Başlık & Afiş -->
+        <div id="movieHeroHeader" class="relative p-5 sm:p-7 border-b border-cinema-border/80 bg-cinema-surface">
+          <div id="movieBackdrop" class="hidden absolute inset-0 bg-cover bg-center opacity-20 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-cinema-surface via-cinema-surface/85 to-cinema-surface/65 pointer-events-none"></div>
+
+          <div class="relative flex flex-col sm:flex-row gap-5 sm:gap-6 items-start">
+            <!-- Film Afişi -->
+            <div class="w-36 sm:w-44 shrink-0 mx-auto sm:mx-0">
+              <div class="aspect-[2/3] rounded-xl overflow-hidden border border-cinema-border bg-cinema-card shadow-xl shadow-black/50 flex items-center justify-center relative">
+                <img id="moviePoster" src="" alt="Film Afişi"
+                  class="hidden w-full h-full object-cover max-w-full" />
+                <div id="moviePosterFallback" class="flex flex-col items-center justify-center text-center p-4 text-slate-400">
+                  <svg class="w-10 h-10 text-slate-600 mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" />
+                  </svg>
+                  <span class="text-[11px]">Afiş bulunamadı</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Başlık, Meta ve Eleştirmen Kararı -->
+            <div class="flex-1 w-full space-y-4">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div class="space-y-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span id="sourceBadge" class="px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold">Canlı Veri</span>
+                    <span id="movieYear" class="text-xs text-slate-400 font-medium"></span>
+                    <span id="movieRuntime" class="text-xs text-slate-400"></span>
+                  </div>
+                  <h3 id="movieTitle" class="text-2xl sm:text-3xl font-extrabold text-white leading-tight"></h3>
+                  <p id="movieOriginalTitle" class="text-xs text-slate-400 hidden"></p>
+                  <div id="movieGenres" class="flex flex-wrap gap-1.5 pt-1"></div>
+                </div>
+
+                <!-- 100 Üzerinden Karar Rozeti -->
+                <div class="flex items-center gap-3 bg-cinema-card/90 border border-cinema-border rounded-2xl px-4 py-3 shrink-0">
+                  <div class="text-center">
+                    <div id="verdictScore" class="text-3xl font-black leading-none text-emerald-400">--</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 mt-1">/ 100 Puan</div>
+                  </div>
+                  <div class="h-10 w-px bg-cinema-border"></div>
+                  <div>
+                    <div id="verdictLabel" class="text-sm font-bold text-white">--</div>
+                    <div id="verdictSub" class="text-[11px] text-slate-400">SineKritik Kararı</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Yönetmen ve Başrol Oyuncuları -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div class="rounded-xl bg-cinema-card/85 border border-cinema-border/80 px-3.5 py-2.5">
+                  <div id="directorRoleLabel" class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Yönetmen</div>
+                  <div id="movieDirector" class="text-sm font-semibold text-white mt-0.5">—</div>
+                </div>
+                <div class="rounded-xl bg-cinema-card/85 border border-cinema-border/80 px-3.5 py-2.5">
+                  <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Başrol Oyuncuları</div>
+                  <div id="movieCast" class="text-sm font-semibold text-white mt-0.5">—</div>
+                </div>
+              </div>
+
+              <!-- Dış Bağlantılar, İzleme Listesi, İzledim & Paylaşım -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <button id="toggleWatchlistBtn" type="button"
+                  class="px-3.5 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-200 transition">
+                  + İzleme Listeme Ekle
+                </button>
+                <button id="toggleWatchedBtn" type="button"
+                  class="px-3.5 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-200 transition">
+                  ✓ İzledim / Puanla
+                </button>
+                <a id="shareWhatsappBtn" href="https://wa.me/" target="_blank" rel="noopener noreferrer"
+                  class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs font-semibold transition">
+                  WhatsApp'ta Paylaş ↗
+                </a>
+                <button id="copySummaryBtn" type="button"
+                  class="px-3 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-300 transition">
+                  Özeti Kopyala
+                </button>
+                <a id="imdbLink" href="https://www.imdb.com/" target="_blank" rel="noopener noreferrer"
+                  class="hidden px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs font-semibold transition">
+                  IMDb'de Aç ↗
+                </a>
+                <a id="rtLink" href="https://www.rottentomatoes.com/" target="_blank" rel="noopener noreferrer"
+                  class="px-3 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-semibold transition">
+                  RT'de Aç ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Puan Kartları, Konu, Eleştiri ve Türkiye İzleme Platformları -->
+        <div class="p-5 sm:p-7 space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <!-- IMDb -->
+            <div class="rounded-xl bg-cinema-card border border-cinema-border p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-amber-400">IMDb Puanı</div>
+                <div id="imdbScore" class="text-2xl font-black text-white mt-1">—</div>
+                <div id="imdbVotes" class="text-[11px] text-slate-400 mt-0.5"></div>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-amber-400/15 text-amber-400 flex items-center justify-center font-black text-sm">
+                ★
+              </div>
+            </div>
+
+            <!-- Rotten Tomatoes -->
+            <div class="rounded-xl bg-cinema-card border border-cinema-border p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-wider text-rose-400">Rotten Tomatoes</div>
+                <div id="rtScore" class="text-2xl font-black text-white mt-1">—</div>
+                <div id="rtSub" class="text-[11px] text-slate-400 mt-0.5"></div>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center font-black text-sm">
+                🍅
+              </div>
+            </div>
+
+            <!-- Eleştirmen Merceği Seçici -->
+            <div class="rounded-xl bg-cinema-card border border-cinema-border p-4 flex flex-col justify-between">
+              <div class="text-xs font-bold uppercase tracking-wider text-slate-300">Puanlama Merceği</div>
+              <div class="grid grid-cols-3 gap-1 mt-2">
+                <button type="button" data-lens="balanced" class="lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition">Dengeli</button>
+                <button type="button" data-lens="critic" class="lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition">Eleştirmen</button>
+                <button type="button" data-lens="audience" class="lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition">İzleyici</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kısa Özet -->
+          <div class="space-y-2">
+            <h4 id="plotHeadingLabel" class="text-xs font-bold uppercase tracking-wider text-slate-400">Filmin Konusu</h4>
+            <p id="moviePlot" class="text-sm sm:text-[15px] leading-relaxed text-slate-200"></p>
+          </div>
+
+          <!-- Eleştirmen Yorumu -->
+          <div class="rounded-xl bg-gradient-to-br from-cinema-card to-slate-900 border border-cinema-border p-4 sm:p-5 space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-400">SineKritik Değerlendirmesi</span>
+            </div>
+            <p id="movieCriticNote" class="text-sm leading-relaxed text-slate-200"></p>
+          </div>
+
+          <!-- Film Fragmanı (Tıklayınca Oynatır) -->
+          <div id="trailerBox" class="rounded-xl bg-cinema-card/90 border border-cinema-border p-4 sm:p-5 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span id="trailerHeadingLabel" class="text-xs font-bold uppercase tracking-wider text-rose-400">Film Fragmanı</span>
+                <span id="trailerLangBadge" class="hidden px-2 py-0.5 rounded-md bg-rose-500/15 border border-rose-500/30 text-rose-300 text-[10px] font-semibold"></span>
+              </div>
+              <a id="trailerYoutubeLink" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer"
+                class="text-xs font-semibold text-slate-300 hover:text-white transition">
+                YouTube'da Aç ↗
+              </a>
+            </div>
+            <div id="trailerContent"></div>
+          </div>
+
+                    <!-- Bu Filmi Hangi Platformdan İzleyebilirsin? (Türkiye) -->
+          <div id="watchProvidersBox" class="rounded-xl bg-cinema-card/90 border border-cinema-border p-4 sm:p-5 space-y-3.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span id="watchHeadingLabel" class="text-xs font-bold uppercase tracking-wider text-sky-400">Bu Filmi Hangi Platformdan İzleyebilirsin?</span>
+                <span class="px-2 py-0.5 rounded-md bg-sky-500/15 border border-sky-500/30 text-sky-300 text-[10px] font-semibold">Türkiye</span>
+              </div>
+              <a id="watchAllLink" href="https://www.justwatch.com/tr" target="_blank" rel="noopener noreferrer"
+                class="text-xs font-semibold text-sky-300 hover:text-sky-200 transition">
+                Tüm İzleme Seçenekleri ↗
+              </a>
+            </div>
+            <div id="watchProvidersContent" class="space-y-3"></div>
+            <p class="text-[11px] text-slate-500">
+              Türkiye dijital platform verileri TMDb / JustWatch üzerinden canlı olarak çekilir.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Yüksek Puanlı Benzer Filmler -->
+      <section id="similarSection" class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h4 id="similarHeadingLabel" class="text-sm font-bold uppercase tracking-wider text-slate-300">
+              Benzer Yüksek Puanlı Filmler
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">Aynı konu &amp; temadan güncel, yüksek puanlı keşifler</p>
+          </div>
+          <button id="refreshSimilarBtn" type="button"
+            class="hidden px-3 py-1.5 rounded-lg bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-200 transition">
+            Farklı 3 Öneri ↻
+          </button>
+        </div>
+        <div id="similarGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3.5"></div>
+      </section>
+    </section>
+  </main>
+
+  <!-- Alt Bilgi -->
+  <footer class="mt-12 border-t border-cinema-border/60 bg-cinema-surface/50">
+    <div class="max-w-4xl mx-auto px-4 py-6 text-center space-y-2">
+      <p class="text-xs text-slate-400">
+        SineKritik — TMDb ve OMDb canlı verileriyle çalışan Türkçe film eleştirmeni.
+      </p>
+      <p class="text-[11px] leading-relaxed text-slate-500 max-w-2xl mx-auto">
+        Bu uygulama Ali Emre Altıntaş tarafından geliştirilmiştir. © 2026 Tüm hakları saklıdır. Uygulamanın arayüzü, yazılımı ve özgün içerikleri izinsiz kopyalanamaz, çoğaltılamaz veya başka platformlarda kullanılamaz.
+      </p>
+    </div>
+  </footer>
+
+  <!-- İzleme Listesi & İzlediklerim Modalı -->
+  <div id="watchlistModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md max-h-[82vh] flex flex-col rounded-2xl bg-cinema-surface border border-cinema-border shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-cinema-border flex items-center justify-between gap-2">
+        <div class="inline-flex rounded-xl bg-cinema-bg p-1 border border-cinema-border/80">
+          <button id="modalTabWatchlist" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white transition">İzleme Listem</button>
+          <button id="modalTabWatched" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">İzlediklerim</button>
+        </div>
+        <button type="button" data-close-modal="watchlistModal" class="px-2.5 py-1 rounded-lg text-slate-400 hover:bg-cinema-card hover:text-white">✕</button>
+      </div>
+      <div id="watchlistBody" class="flex-1 overflow-y-auto p-5 space-y-2.5 scrollbar-thin"></div>
+    </div>
+  </div>
+
+  <!-- İzledim & Kişisel Puan Modalı -->
+  <div id="watchedRateModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-cinema-surface border border-cinema-border shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-cinema-border flex items-center justify-between">
+        <h3 id="watchedModalTitle" class="text-base font-bold text-white truncate">Filmi Puanla</h3>
+        <button type="button" data-close-modal="watchedRateModal" class="px-2.5 py-1 rounded-lg text-slate-400 hover:bg-cinema-card hover:text-white">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div class="space-y-2">
+          <div class="text-xs font-semibold text-slate-300">Kişisel Puanın (1 – 10)</div>
+          <div id="personalScorePicker" class="grid grid-cols-5 gap-1.5"></div>
+        </div>
+        <div class="space-y-1.5">
+          <label for="personalNoteInput" class="text-xs font-semibold text-slate-300">Kısa Notun (İsteğe bağlı)</label>
+          <input id="personalNoteInput" type="text" maxlength="160" placeholder="Örn: Finali harikaydı, eşimle çok beğendik..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-cinema-bg border border-cinema-border text-xs text-white focus:border-emerald-400 focus:outline-none" />
+        </div>
+        <p class="text-[11px] text-slate-400">
+          İzlediklerin listesine eklenen filmler bundan sonra ruh hali ve ortak film önerilerinde tekrar karşına çıkmaz.
+        </p>
+        <div class="flex items-center justify-between gap-2 pt-1">
+          <button id="removeWatchedBtn" type="button"
+            class="hidden px-3 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-xs font-semibold text-rose-300 transition">
+            İzlediklerimden Çıkar
+          </button>
+          <div class="flex items-center gap-2 ml-auto">
+            <button type="button" data-close-modal="watchedRateModal"
+              class="px-3.5 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-300 transition">
+              Vazgeç
+            </button>
+            <button id="saveWatchedBtn" type="button"
+              class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition">
+              Kaydet
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Yönetmen / Oyuncu Filmografisi Modalı -->
+  <div id="personModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-lg max-h-[82vh] flex flex-col rounded-2xl bg-cinema-surface border border-cinema-border shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-cinema-border flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <h3 id="personModalName" class="text-base font-bold text-white truncate">Filmografi</h3>
+          <p id="personModalRole" class="text-[11px] text-slate-400">En yüksek puanlı filmleri</p>
+        </div>
+        <button type="button" data-close-modal="personModal" class="px-2.5 py-1 rounded-lg text-slate-400 hover:bg-cinema-card hover:text-white shrink-0">✕</button>
+      </div>
+      <div id="personModalBody" class="flex-1 overflow-y-auto p-5 space-y-2.5 scrollbar-thin"></div>
+    </div>
+  </div>
+
+  <!-- Ayarlar Modalı -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-cinema-surface border border-cinema-border shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-cinema-border flex items-center justify-between">
+        <h3 class="text-base font-bold text-white">Canlı API Ayarları</h3>
+        <button type="button" data-close-modal="settingsModal" class="px-2.5 py-1 rounded-lg text-slate-400 hover:bg-cinema-card hover:text-white">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Varsayılan API anahtarları uygulamaya gömülüdür; paylaştığın kişiler hiçbir ayar yapmadan doğrudan kullanabilir. İstersen buradan kendi anahtarlarınla değiştirebilirsin.
+        </p>
+        <div class="space-y-1.5">
+          <label for="tmdbKeyInput" class="text-xs font-semibold text-slate-300">TMDb API Key (v3 veya v4 Token)</label>
+          <input id="tmdbKeyInput" type="text" placeholder="TMDb anahtarı..."
+            class="w-full px-3 py-2 rounded-xl bg-cinema-bg border border-cinema-border text-xs text-white focus:border-rose-500 focus:outline-none" />
+        </div>
+        <div class="space-y-1.5">
+          <label for="omdbKeyInput" class="text-xs font-semibold text-slate-300">OMDb API Key (IMDb &amp; Rotten Tomatoes)</label>
+          <input id="omdbKeyInput" type="text" placeholder="OMDb anahtarı..."
+            class="w-full px-3 py-2 rounded-xl bg-cinema-bg border border-cinema-border text-xs text-white focus:border-rose-500 focus:outline-none" />
+        </div>
+        <div id="testResultBox" class="hidden rounded-xl border px-3 py-2.5 text-xs"></div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="testApiBtn" type="button"
+            class="px-3.5 py-2 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border text-xs font-semibold text-slate-200 transition">
+            Bağlantıyı Test Et
+          </button>
+          <button id="saveApiBtn" type="button"
+            class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white transition">
+            Kaydet
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // VARSAYILAN API ANAHTARLARI (Paylaştığın kişilerde de otomatik çalışır)
+    // =========================================================================
+    const DEFAULT_TMDB_API_KEY = '921ba93bfde065e278643ffb2608343e';
+    const DEFAULT_OMDB_API_KEY = '15b7965';
+
+    // Türkçe tür eşleştirme (Film + Dizi)
+    const GENRE_TR = {
+      28: 'Aksiyon', 12: 'Macera', 16: 'Animasyon', 35: 'Komedi', 80: 'Suç',
+      99: 'Belgesel', 18: 'Dram', 10751: 'Aile', 14: 'Fantastik', 36: 'Tarih',
+      27: 'Korku', 10402: 'Müzik', 9648: 'Gizem', 10749: 'Romantik',
+      878: 'Bilim Kurgu', 10770: 'TV Filmi', 53: 'Gerilim', 10752: 'Savaş', 37: 'Western',
+      10759: 'Aksiyon & Macera', 10762: 'Çocuk', 10763: 'Haber', 10764: 'Reality',
+      10765: 'Bilim Kurgu & Fantastik', 10766: 'Pembe Dizi', 10767: 'Talk Show', 10768: 'Savaş & Politik'
+    };
+
+    function mapGenresForMediaType(movieGenreIds, mediaType) {
+      if (mediaType !== 'tv') return Array.from(new Set(movieGenreIds));
+      const tvMap = {
+        28: 10759, 12: 10759, 878: 10765, 14: 10765, 10752: 10768,
+        53: 9648, 27: 9648, 10749: 18, 36: 18, 10402: 18
+      };
+      return Array.from(new Set((movieGenreIds || []).map(id => tvMap[id] || id)));
+    }
+
+    // Türkiye platform kutucukları (TMDb TR canlı listesiyle otomatik güncellenir)
+    const TR_PLATFORMS = [
+      { key: 'netflix', label: 'Netflix', ids: ['8'], match: ['netflix'] },
+      { key: 'prime', label: 'Amazon Prime', ids: ['119'], match: ['amazon prime'] },
+      { key: 'disney', label: 'Disney+', ids: ['337'], match: ['disney plus', 'disney+'] },
+      { key: 'mubi', label: 'MUBI', ids: ['11'], match: ['mubi'] },
+      { key: 'max', label: 'Max / BluTV', ids: ['1899', '341'], match: ['max', 'blutv', 'hbo'] },
+      { key: 'apple', label: 'Apple TV+', ids: ['350', '2'], match: ['apple tv'] }
+    ];
+
+    // Çevrimdışı / yedek mini katalog
+    const FALLBACK_MOVIES = [
+      {
+        id: 'past-lives', title: 'Başka Bir Hayatta', originalTitle: 'Past Lives', year: 2023, runtime: '106 dk',
+        director: 'Celine Song', cast: 'Greta Lee, Teo Yoo, John Magaro',
+        genres: ['Dram', 'Romantik'], imdb: 7.8, rt: 95, rtAudience: 84, metascore: 94,
+        imdbId: 'tt13238346', posterUrl: '', backdropUrl: '',
+        plot: 'Çocukluk aşkı olan Nora ve Hae Sung, Nora’nın ailesinin Güney Kore’den Kanada’ya taşınmasıyla ayrılır. Yirmi yıl sonra New York’ta yeniden bir araya geldiklerinde kader, seçimler ve "ya şöyle olsaydı" ihtimalleriyle yüzleşirler.',
+        criticNote: 'Büyük dramatik patlamalar olmadan, tek bir bakış ve sessizlikle insanın içine işleyen zarif bir başyapıt. Hüzünlü ve romantik bir akşam için son yılların en incelikli filmi.',
+        watchProviders: null,
+        moods: ['hüzünlü', 'romantik', 'düşünceli'],
+        similar: [
+          { title: 'Güneş Sonrası', year: 2022, imdb: 7.6, rt: 96, note: 'Sessiz, derin ve uzun süre akılda kalan duygusallık' },
+          { title: 'Alev Almış Bir Genç Kızın Portresi', year: 2019, imdb: 8.1, rt: 98, note: 'Büyüleyici görsellik ve zarif bir aşk hikayesi' },
+          { title: 'Mükemmel Günler', year: 2023, imdb: 7.9, rt: 96, note: 'Sakin ritmiyle hayatın küçük anlarına odaklanıyor' }
+        ]
+      },
+      {
+        id: 'parasite', title: 'Parazit', originalTitle: 'Parasite', year: 2019, runtime: '132 dk',
+        director: 'Bong Joon-ho', cast: 'Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong, Choi Woo-shik',
+        genres: ['Gerilim', 'Dram', 'Komedi'], imdb: 8.5, rt: 99, rtAudience: 90, metascore: 96,
+        imdbId: 'tt6751668', posterUrl: '', backdropUrl: '',
+        plot: 'Yoksul Kim ailesi, zekice bir planla zengin Park ailesinin malikanesinde tek tek iş bulur. Ancak evin içinde saklanan beklenmedik bir sır, iki aile arasındaki dengeyi geri dönülmez biçimde altüst eder.',
+        criticNote: 'Kara mizah, sınıf eleştirisi ve keskin gerilimi kusursuz bir tempoda birleştiren modern bir klasik. İlk dakikasından finaline kadar temposu bir an bile düşmüyor.',
+        watchProviders: null,
+        moods: ['gerilim', 'heyecanlı', 'düşünceli'],
+        similar: [
+          { title: 'Bir Düşüşün Anatomisi', year: 2023, imdb: 7.7, rt: 96, note: 'Zekice kurgulanmış psikolojik gerilim ve mahkeme dramı' },
+          { title: 'Başlangıç', year: 2010, imdb: 8.8, rt: 86, note: 'Katmanlı kurgu ve yüksek tempolu zihin oyunu' },
+          { title: 'Whiplash', year: 2014, imdb: 8.5, rt: 94, note: 'Nefes kesen tempo ve yüksek psikolojik tansiyon' }
+        ]
+      },
+      {
+        id: 'holdovers', title: 'Geride Kalanlar', originalTitle: 'The Holdovers', year: 2023, runtime: '133 dk',
+        director: 'Alexander Payne', cast: 'Paul Giamatti, Da\'Vine Joy Randolph, Dominic Sessa',
+        genres: ['Komedi', 'Dram'], imdb: 7.9, rt: 97, rtAudience: 92, metascore: 82,
+        imdbId: 'tt14849194', posterUrl: '', backdropUrl: '',
+        plot: '1970 kışında huysuz bir tarih öğretmeni, Noel tatilinde eve gidemeyen zeki ama sorunlu bir öğrenci ve okulun yas tutan aşçısı boş kampüste baş başa kalır; aralarında beklenmedik, sıcacık bir bağ kurulur.',
+        criticNote: 'Hem gülümseten hem duygulandıran, 70’ler sinemasının sıcaklığını taşıyan nadir filmlerden. Yorgun bir akşamda içini ısıtacak güçlü bir karakter filmi.',
+        watchProviders: null,
+        moods: ['yorgun', 'hüzünlü', 'motive'],
+        similar: [
+          { title: 'Mükemmel Günler', year: 2023, imdb: 7.9, rt: 96, note: 'Huzurlu, sade ve insan ruhuna iyi gelen anlatım' },
+          { title: 'Sing Street', year: 2016, imdb: 7.9, rt: 95, note: 'Müzik dolu, enerjik ve umut verici bir büyüme hikayesi' },
+          { title: 'Esaretin Bedeli', year: 1994, imdb: 9.3, rt: 89, note: 'Umut ve dostluk üzerine zamansız bir başyapıt' }
+        ]
+      },
+      {
+        id: 'kis-uykusu', title: 'Kış Uykusu', originalTitle: 'Kış Uykusu', year: 2014, runtime: '196 dk',
+        director: 'Nuri Bilge Ceylan', cast: 'Haluk Bilginer, Melisa Sözen, Demet Akbağ, Ayberk Pekcan',
+        genres: ['Dram'], imdb: 8.0, rt: 87, rtAudience: 84, metascore: 88,
+        imdbId: 'tt2758880', posterUrl: '', backdropUrl: '',
+        plot: 'Emekli tiyatro oyuncusu Aydın, Kapadokya’da işlettiği küçük otelde genç eşi Nihal ve kız kardeşi Necla ile yaşar. Kışın bastırmasıyla birlikte otel, bastırılmış öfkelerin ve vicdani hesaplaşmaların sahnesine dönüşür.',
+        criticNote: 'Altın Palmiye ödüllü, edebiyat tadında diyalogları ve kusursuz oyunculuklarıyla uzun süresine rağmen izleyiciyi derin bir iç hesaplaşmaya davet eden bir başyapıt.',
+        watchProviders: null,
+        moods: ['düşünceli', 'hüzünlü'],
+        similar: [
+          { title: 'Ahlat Ağacı', year: 2018, imdb: 8.0, rt: 94, note: 'Aile, hayaller ve taşra üzerine keskin bir portre' },
+          { title: 'Bir Zamanlar Anadolu\'da', year: 2011, imdb: 7.8, rt: 92, note: 'Atmosferik, sabırlı ve hipnotik bir gece yolculuğu' },
+          { title: 'Kuru Otlar Üstüne', year: 2023, imdb: 7.7, rt: 92, note: 'İnsan doğasının gri tonlarını ustalıkla işliyor' }
+        ]
+      }
+    ];
+
+    // Genişletilmiş Özgül Konu -> İngilizce TMDb Anahtar Kelime + Opsiyonel Tür Eşlemesi
+    // Burada olmayan HERHANGİ bir Türkçe kelime de otomatik İngilizceye çevrilip TMDb'de aranır!
+    const SPECIFIC_TOPIC_KEYWORDS = [
+      { keys: ['dövüş', 'dovus', 'kavga', 'kung fu', 'karate', 'mma', 'kickboks'], kw: ['martial arts', 'fighting', 'hand to hand combat'], genres: [28] },
+      { keys: ['boks', 'ring'], kw: ['boxing', 'boxer'], genres: [18] },
+      { keys: ['samuray', 'ninja', 'kılıç', 'kilic'], kw: ['samurai', 'sword fight', 'martial arts'], genres: [28] },
+      { keys: ['intikam', 'öç'], kw: ['revenge', 'vengeance'], genres: [53, 28] },
+      { keys: ['soygun', 'hırsız', 'hirsiz', 'banka'], kw: ['heist', 'bank robbery'], genres: [80, 53] },
+      { keys: ['hapishane', 'cezaevi', 'kaçış', 'kacis'], kw: ['prison', 'prison escape'], genres: [18, 80] },
+      { keys: ['mafya', 'gangster', 'kartel', 'çete', 'cete'], kw: ['mafia', 'gangster', 'organized crime'], genres: [80] },
+      { keys: ['ajan', 'casus', 'istihbarat', 'suikast', 'tetikçi', 'tetikci'], kw: ['spy', 'assassin', 'espionage'], genres: [28, 53] },
+      { keys: ['dedektif', 'cinayet', 'katil', 'seri katil', 'soruşturma'], kw: ['detective', 'serial killer', 'murder investigation'], genres: [9648, 80] },
+      { keys: ['mahkeme', 'avukat', 'hukuk', 'dava', 'jüri'], kw: ['courtroom', 'lawyer', 'trial'], genres: [18] },
+      { keys: ['zaman yolculu', 'zaman döngü', 'zaman'], kw: ['time travel', 'time loop'], genres: [878] },
+      { keys: ['uzay', 'astronot', 'gezegen', 'galaksi', 'uzaylı'], kw: ['space', 'astronaut', 'alien'], genres: [878] },
+      { keys: ['yapay zeka', 'robot', 'siber', 'hacker'], kw: ['artificial intelligence', 'robot', 'cyberpunk'], genres: [878] },
+      { keys: ['distopya', 'kıyamet', 'kiyamet', 'salgın', 'virüs'], kw: ['dystopia', 'post-apocalyptic', 'pandemic'], genres: [878, 53] },
+      { keys: ['hayatta kalma', 'ada', 'orman', 'dağ', 'deniz'], kw: ['survival', 'deserted island', 'wilderness'], genres: [12, 53] },
+      { keys: ['yol filmi', 'yolculuk', 'seyahat', 'tatil'], kw: ['road trip', 'journey'], genres: [12, 18] },
+      { keys: ['yemek', 'aşçı', 'asci', 'restoran', 'mutfak', 'şef'], kw: ['chef', 'cooking', 'restaurant'], genres: [18, 35] },
+      { keys: ['satranç', 'satranc', 'zeka oyunu', 'bulmaca'], kw: ['chess', 'mind game', 'puzzle'], genres: [18, 9648] },
+      { keys: ['kumar', 'poker', 'kumarhane', 'bahis'], kw: ['gambling', 'poker', 'casino'], genres: [80, 53] },
+      { keys: ['araba', 'yarış', 'yaris', 'hız', 'formula'], kw: ['car race', 'street racing', 'motorsport'], genres: [28] },
+      { keys: ['futbol', 'basketbol', 'spor', 'olimpiyat'], kw: ['sports', 'football', 'basketball'], genres: [18] },
+      { keys: ['müzik', 'muzik', 'caz', 'piyano', 'şarkı', 'konser', 'müzikal'], kw: ['music', 'musician', 'jazz'], genres: [10402] },
+      { keys: ['dans', 'bale'], kw: ['dance', 'ballet'], genres: [18, 10402] },
+      { keys: ['savaş', 'savas', 'asker', 'cephe', 'denizaltı'], kw: ['war', 'soldier', 'world war ii'], genres: [10752] },
+      { keys: ['vampir', 'zombi', 'hayalet', 'canavar', 'lanet'], kw: ['vampire', 'zombie', 'ghost'], genres: [27] },
+      { keys: ['büyü', 'buyu', 'cadı', 'ejderha', 'orta çağ'], kw: ['magic', 'wizard', 'medieval'], genres: [14] },
+      { keys: ['psikolojik', 'zihin', 'rüya', 'ruya', 'hafıza', 'delilik'], kw: ['psychological thriller', 'dream', 'memory'], genres: [53, 9648] },
+      { keys: ['lise', 'üniversite', 'gençlik', 'okul', 'öğretmen'], kw: ['high school', 'coming of age', 'teacher'], genres: [18, 35] },
+      { keys: ['köpek', 'kopek', 'kedi', 'hayvan', 'at'], kw: ['dog', 'cat', 'animal'], genres: [18, 10751] },
+      { keys: ['gazeteci', 'yazar', 'ressam', 'sanatçı', 'fotoğraf'], kw: ['journalist', 'writer', 'painter'], genres: [18] },
+      { keys: ['doktor', 'hastane', 'tıp'], kw: ['doctor', 'hospital'], genres: [18] },
+      { keys: ['korsan', 'gemi', 'hazine'], kw: ['pirate', 'treasure hunt'], genres: [12] },
+      { keys: ['süper kahraman', 'kahraman'], kw: ['superhero'], genres: [28, 878] },
+      { keys: ['aile', 'baba', 'anne', 'kardeş', 'çocuk'], kw: ['family relationships', 'father son relationship'], genres: [18, 10751] },
+      { keys: ['gerçek hikaye', 'biyografi'], kw: ['based on true story', 'biography'], genres: [18, 36] }
+    ];
+
+    // Ülke / Sinema / Dil Eşleştirme Tablosu (örn: kore filmleri, fransız, japon, türk, iran...)
+    const COUNTRY_LANGUAGE_MAP = [
+      { keys: ['güney kore', 'guney kore', 'kore', 'korece', 'k-movie'], lang: 'ko', country: 'KR' },
+      { keys: ['fransız', 'fransiz', 'fransa', 'fransızca'], lang: 'fr', country: 'FR' },
+      { keys: ['japon', 'japonya', 'japonca'], lang: 'ja', country: 'JP' },
+      { keys: ['türk', 'turk', 'türkiye', 'türkçe', 'yerli', 'yeşilçam', 'yesilcam'], lang: 'tr', country: 'TR' },
+      { keys: ['hint', 'hindistan', 'hintçe', 'bollywood'], lang: 'hi', country: 'IN' },
+      { keys: ['ispanyol', 'ispanya', 'ispanyolca'], lang: 'es', country: 'ES' },
+      { keys: ['italyan', 'italya', 'italyanca'], lang: 'it', country: 'IT' },
+      { keys: ['alman', 'almanya', 'almanca'], lang: 'de', country: 'DE' },
+      { keys: ['iran', 'farsça', 'farsca', 'iranlı'], lang: 'fa', country: 'IR' },
+      { keys: ['rusya', 'rusça', 'rusca', 'sovyet', 'rus'], lang: 'ru', country: 'RU' },
+      { keys: ['hong kong'], lang: 'cn', country: 'HK' },
+      { keys: ['tayvan'], lang: 'zh', country: 'TW' },
+      { keys: ['çin', 'cin', 'çince'], lang: 'zh', country: 'CN|HK|TW' },
+      { keys: ['ingiliz', 'ingiltere', 'britanya'], lang: 'en', country: 'GB' },
+      { keys: ['amerikan', 'amerika', 'hollywood', 'abd'], lang: 'en', country: 'US' },
+      { keys: ['iskandinav', 'isveç', 'isvec', 'norveç', 'norvec', 'danimarka', 'finlandiya'], lang: '', country: 'SE|NO|DK|FI' },
+      { keys: ['meksika'], lang: 'es', country: 'MX' },
+      { keys: ['arjantin'], lang: 'es', country: 'AR' },
+      { keys: ['brezilya', 'portekiz'], lang: 'pt', country: 'BR|PT' },
+      { keys: ['polonya', 'polonyalı'], lang: 'pl', country: 'PL' },
+      { keys: ['yunan', 'yunanistan'], lang: 'el', country: 'GR' },
+      { keys: ['arap', 'arapça', 'lübnan', 'mısır'], lang: 'ar', country: 'LB|EG|MA|PS|TN' },
+      { keys: ['tayland'], lang: 'th', country: 'TH' },
+      { keys: ['kanada'], lang: '', country: 'CA' },
+      { keys: ['avustralya'], lang: '', country: 'AU' },
+      { keys: ['uzak doğu', 'uzak dogu', 'asya'], lang: '', country: 'KR|JP|CN|HK|TW|TH' },
+      { keys: ['avrupa'], lang: '', country: 'FR|DE|IT|ES|SE|DK|NO|PL|GB' }
+    ];
+
+    function matchesWholeOrPrefix(text, key) {
+      const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`(^|[\\s,.;:/+-])${escaped}`, 'i');
+      return re.test(text);
+    }
+
+        // Genel Ruh Hali & Tür Eşleştirme Tablosu
+    const MOOD_GENRE_MAP = [
+      { keys: ['hüzün', 'üzgün', 'ağla', 'melankoli', 'duygusal', 'kırgın', 'dram', 'nostalji'], genreIds: [18] },
+      { keys: ['romantik', 'aşk', 'sevgili', 'tatlı', 'evlilik', 'ilişki'], genreIds: [10749] },
+      { keys: ['bilim kurgu', 'bilimkurgu', 'sci-fi'], genreIds: [878] },
+      { keys: ['gerilim', 'gergin', 'karanlık', 'tansiyon'], genreIds: [53] },
+      { keys: ['gizem', 'esrarengiz', 'sır'], genreIds: [9648] },
+      { keys: ['suç', 'polisiye'], genreIds: [80] },
+      { keys: ['aksiyon', 'heyecan', 'tempolu', 'adrenalin'], genreIds: [28] },
+      { keys: ['macera', 'keşif'], genreIds: [12] },
+      { keys: ['komedi', 'yorgun', 'eğlen', 'kafa', 'rahat', 'keyif', 'hafif', 'gül', 'mizah'], genreIds: [35] },
+      { keys: ['korku', 'ürpert', 'korkunç'], genreIds: [27] },
+      { keys: ['tarih', 'dönem'], genreIds: [36] },
+      { keys: ['motive', 'ilham', 'umut', 'başarı', 'güçlü'], genreIds: [18, 36] },
+      { keys: ['fantastik', 'masal', 'mitoloji'], genreIds: [14] },
+      { keys: ['animasyon', 'anime', 'çizgi'], genreIds: [16] },
+      { keys: ['düşün', 'felsef', 'derin', 'sanat', 'bağımsız', 'festival'], genreIds: [18, 9648] },
+      { keys: ['belgesel'], genreIds: [99] },
+      { keys: ['western', 'kovboy'], genreIds: [37] }
+    ];
+
+    // Uygulama Durumu
+    let currentMovie = null;
+    let currentLens = 'balanced';
+    let activeMediaType = 'movie'; // 'movie' | 'tv'
+    let activeRecMode = 'single'; // 'single' | 'joint'
+    let lastSingleQuery = '';
+    let lastJointQueries = { p1: '', p2: '' };
+    const selectedPlatforms = new Set();
+    const seenMoodIds = new Set();
+    const seenJointIds = new Set();
+    const keywordCache = new Map();
+
+    // Yardımcılar
+    const $ = (id) => document.getElementById(id);
+
+    function safeGetStorage(key) {
+      try { return localStorage.getItem(key); }
+      catch { return null; }
+    }
+    function safeSetStorage(key, value) {
+      try { localStorage.setItem(key, value); }
+      catch {}
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getTmdbKey() {
+      return (safeGetStorage('sinekritik_tmdb_key') || DEFAULT_TMDB_API_KEY || '').trim();
+    }
+    function getOmdbKey() {
+      return (safeGetStorage('sinekritik_omdb_key') || DEFAULT_OMDB_API_KEY || '').trim();
+    }
+    let activeListModalTab = 'watchlist'; // 'watchlist' | 'watched'
+    let pendingPersonalScore = 8;
+
+    function getWatchlist() {
+      try { return JSON.parse(safeGetStorage('sinekritik_watchlist') || '[]'); }
+      catch { return []; }
+    }
+    function saveWatchlist(list) {
+      safeSetStorage('sinekritik_watchlist', JSON.stringify(list));
+      updateWatchlistBadge();
+    }
+    function getWatchedList() {
+      try { return JSON.parse(safeGetStorage('sinekritik_watched') || '[]'); }
+      catch { return []; }
+    }
+    function saveWatchedList(list) {
+      safeSetStorage('sinekritik_watched', JSON.stringify(list));
+      updateWatchlistBadge();
+    }
+    function getWatchedTmdbIdSet() {
+      const set = new Set();
+      for (const item of getWatchedList()) {
+        if (item.tmdbId) set.add(Number(item.tmdbId));
+      }
+      return set;
+    }
+    function updateWatchlistBadge() {
+      $('watchlistCount').textContent = String(getWatchlist().length + getWatchedList().length);
+    }
+
+    function showStatus(message, type = 'info') {
+      const box = $('statusBox');
+      box.classList.remove('hidden', 'bg-rose-500/10', 'border-rose-500/30', 'text-rose-200', 'bg-slate-800/80', 'border-cinema-border', 'text-slate-200', 'bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-200');
+      if (type === 'error') {
+        box.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-200');
+      } else if (type === 'success') {
+        box.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-200');
+      } else {
+        box.classList.add('bg-slate-800/80', 'border-cinema-border', 'text-slate-200');
+      }
+      box.textContent = message;
+    }
+    function hideStatus() {
+      $('statusBox').classList.add('hidden');
+    }
+
+    // Platform Kutucukları
+    function renderPlatformCheckboxes() {
+      const container = $('platformCheckboxes');
+      container.innerHTML = TR_PLATFORMS.map(p => {
+        const checked = selectedPlatforms.has(p.key);
+        return `
+          <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-medium cursor-pointer select-none transition ${
+            checked
+              ? 'bg-sky-500/20 border-sky-400 text-sky-100'
+              : 'bg-cinema-card/90 border-cinema-border text-slate-300 hover:border-slate-500'
+          }">
+            <input type="checkbox" data-platform-key="${p.key}" ${checked ? 'checked' : ''} class="accent-sky-400 rounded" />
+            <span>${escapeHtml(p.label)}</span>
+          </label>
+        `;
+      }).join('');
+
+      container.querySelectorAll('input[data-platform-key]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const key = cb.dataset.platformKey;
+          if (cb.checked) selectedPlatforms.add(key);
+          else selectedPlatforms.delete(key);
+          renderPlatformCheckboxes();
+          updatePlatformHint();
+        });
+      });
+    }
+
+    function updatePlatformHint() {
+      const names = getSelectedPlatformLabels();
+      const hint = $('platformFilterHint');
+      if (names.length) {
+        hint.textContent = `Seçili: ${names.join(', ')}`;
+        hint.className = 'text-[11px] font-semibold text-sky-300';
+      } else {
+        hint.textContent = 'İşaretlediklerin arasından önerir (boşsa tümü)';
+        hint.className = 'text-[11px] text-slate-400';
+      }
+    }
+
+    function getSelectedPlatformIds() {
+      const ids = [];
+      for (const p of TR_PLATFORMS) {
+        if (selectedPlatforms.has(p.key)) ids.push(...p.ids);
+      }
+      return Array.from(new Set(ids));
+    }
+
+    function getSelectedPlatformLabels() {
+      return TR_PLATFORMS.filter(p => selectedPlatforms.has(p.key)).map(p => p.label);
+    }
+
+    async function syncTrPlatformIds() {
+      try {
+        const [mData, tvData] = await Promise.all([
+          tmdbFetch('/watch/providers/movie', { watch_region: 'TR', language: 'tr-TR' }).catch(() => ({ results: [] })),
+          tmdbFetch('/watch/providers/tv', { watch_region: 'TR', language: 'tr-TR' }).catch(() => ({ results: [] }))
+        ]);
+        const list = [...(mData?.results || []), ...(tvData?.results || [])];
+        if (!list.length) return;
+        for (const p of TR_PLATFORMS) {
+          const matchedIds = list
+            .filter(item => p.match.some(m => (item.provider_name || '').toLowerCase().includes(m)))
+            .map(item => String(item.provider_id));
+          if (matchedIds.length) {
+            p.ids = Array.from(new Set([...matchedIds, ...p.ids]));
+          }
+        }
+      } catch {}
+    }
+
+    // TMDb API Çağrısı
+    async function tmdbFetch(path, params = {}) {
+      const key = getTmdbKey();
+      if (!key) throw new Error('TMDb API anahtarı bulunamadı.');
+      const url = new URL(`https://api.themoviedb.org/3${path}`);
+      const headers = { accept: 'application/json' };
+      const isBearer = key.length > 40 && key.includes('.');
+      if (isBearer) {
+        headers.Authorization = `Bearer ${key}`;
+      } else {
+        url.searchParams.set('api_key', key);
+      }
+      for (const [k, v] of Object.entries(params)) {
+        if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, String(v));
+      }
+      const res = await fetch(url.toString(), { headers });
+      if (!res.ok) throw new Error(`TMDb isteği başarısız oldu (${res.status}).`);
+      return res.json();
+    }
+
+    // OMDb API Çağrısı (Film ve Dizi destekli)
+    async function omdbFetch({ imdbId, title, year, mediaType = 'movie' }) {
+      const key = getOmdbKey();
+      if (!key) return null;
+      const url = new URL('https://www.omdbapi.com/');
+      url.searchParams.set('apikey', key);
+      url.searchParams.set('tomatoes', 'true');
+      if (imdbId) {
+        url.searchParams.set('i', imdbId);
+      } else if (title) {
+        url.searchParams.set('t', title);
+        url.searchParams.set('type', mediaType === 'tv' ? 'series' : 'movie');
+        if (year) url.searchParams.set('y', String(year));
+      } else {
+        return null;
+      }
+      try {
+        const res = await fetch(url.toString());
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data.Response === 'False') return null;
+        return data;
+      } catch {
+        return null;
+      }
+    }
+
+    function extractOmdbRatings(omdb) {
+      if (!omdb) return { imdb: null, imdbVotes: '', rt: null, metascore: null, poster: '', actors: '', director: '' };
+      const imdb = omdb.imdbRating && omdb.imdbRating !== 'N/A' ? parseFloat(omdb.imdbRating) : null;
+      const imdbVotes = omdb.imdbVotes && omdb.imdbVotes !== 'N/A' ? omdb.imdbVotes : '';
+      let rt = null;
+      if (Array.isArray(omdb.Ratings)) {
+        const rtObj = omdb.Ratings.find(r => r.Source === 'Rotten Tomatoes');
+        if (rtObj && rtObj.Value) {
+          const parsed = parseInt(rtObj.Value.replace('%', ''), 10);
+          if (!Number.isNaN(parsed)) rt = parsed;
+        }
+      }
+      if (rt === null && omdb.tomatoMeter && omdb.tomatoMeter !== 'N/A') {
+        const parsed = parseInt(omdb.tomatoMeter, 10);
+        if (!Number.isNaN(parsed)) rt = parsed;
+      }
+      let metascore = null;
+      if (omdb.Metascore && omdb.Metascore !== 'N/A') {
+        const parsed = parseInt(omdb.Metascore, 10);
+        if (!Number.isNaN(parsed)) metascore = parsed;
+      }
+      const poster = omdb.Poster && omdb.Poster !== 'N/A' ? omdb.Poster : '';
+      const actors = omdb.Actors && omdb.Actors !== 'N/A' ? omdb.Actors : '';
+      const director = omdb.Director && omdb.Director !== 'N/A' ? omdb.Director : '';
+      return { imdb, imdbVotes, rt, metascore, poster, actors, director };
+    }
+
+    // Türkiye İzleme Platformlarını Ayıkla
+    function extractTrWatchProviders(rawWatchData, fallbackTitle) {
+      const tr = rawWatchData?.results?.TR || null;
+      const justWatchSearch = `https://www.justwatch.com/tr/ara?q=${encodeURIComponent(fallbackTitle || '')}`;
+      if (!tr) {
+        return { link: justWatchSearch, flatrate: [], freeAds: [], rentBuy: [], hasAny: false };
+      }
+
+      const mapProvider = (p) => ({
+        id: p.provider_id,
+        name: p.provider_name,
+        logo: p.logo_path ? `https://image.tmdb.org/t/p/w92${p.logo_path}` : ''
+      });
+
+      const dedupe = (arr) => {
+        const seen = new Set();
+        return (arr || []).filter(p => {
+          if (!p || seen.has(p.provider_id)) return false;
+          seen.add(p.provider_id);
+          return true;
+        }).map(mapProvider);
+      };
+
+      const flatrate = dedupe(tr.flatrate);
+      const freeAds = dedupe([...(tr.free || []), ...(tr.ads || [])]);
+
+      const rentMap = new Map();
+      for (const p of (tr.rent || [])) {
+        rentMap.set(p.provider_id, { ...mapProvider(p), rent: true, buy: false });
+      }
+      for (const p of (tr.buy || [])) {
+        if (rentMap.has(p.provider_id)) {
+          rentMap.get(p.provider_id).buy = true;
+        } else {
+          rentMap.set(p.provider_id, { ...mapProvider(p), rent: false, buy: true });
+        }
+      }
+      const rentBuy = Array.from(rentMap.values()).map(item => ({
+        ...item,
+        actionLabel: item.rent && item.buy ? 'Kirala / Satın Al' : (item.rent ? 'Kirala' : 'Satın Al')
+      }));
+
+      const hasAny = flatrate.length > 0 || freeAds.length > 0 || rentBuy.length > 0;
+      return {
+        link: tr.link || justWatchSearch,
+        flatrate,
+        freeAds,
+        rentBuy,
+        hasAny
+      };
+    }
+
+    const titleTrCache = new Map();
+
+    // Latin alfabesi dışındaki yazıları (Hintçe, Japonca, Arapça, Korece, Çince, Kiril vb.) tespit et
+    function hasNonLatinScript(text) {
+      return /[\u0370-\u03FF\u0400-\u04FF\u0590-\u05FF\u0600-\u06FF\u0900-\u0D7F\u0E00-\u0E7F\u3040-\u30FF\u3400-\u9FFF\uAC00-\uD7AF]/.test(String(text || ''));
+    }
+
+    // Çeviri Yardımcıları (EN/Kaynak Dil -> TR özet/başlık ve TR -> EN serbest konu çözümleme)
+    async function translateToTurkish(text, sourceLang = 'en') {
+      if (!text || text.trim().length < 2) return '';
+      try {
+        const snippet = text.trim().slice(0, 480);
+        const lang = (sourceLang && sourceLang !== 'tr') ? sourceLang : 'en';
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(snippet)}&langpair=${encodeURIComponent(lang)}|tr`);
+        if (!res.ok) return '';
+        const data = await res.json();
+        const translated = (data?.responseData?.translatedText || '').trim();
+        if (translated && !translated.toUpperCase().includes('MYMEMORY WARNING')) return translated;
+      } catch {}
+      return '';
+    }
+
+    // Latin alfabesi dışındaki (Japonca, Hintçe, Arapça, Korece vb.) film isimlerini Türkçeye çevir
+    async function resolveTurkishTitle({ trTitle, enTitle, originalTitle, originalLang }) {
+      const cleanTr = (trTitle || '').trim();
+      const cleanEn = (enTitle || '').trim();
+      const cleanOrig = (originalTitle || '').trim();
+
+      // Zaten temiz Latin alfabesinde Türkçe ad varsa doğrudan kullan
+      if (cleanTr && !hasNonLatinScript(cleanTr)) {
+        return cleanTr;
+      }
+
+      const cacheKey = `${cleanTr}|${cleanEn}|${cleanOrig}`;
+      if (titleTrCache.has(cacheKey)) return titleTrCache.get(cacheKey);
+
+      let resolved = '';
+      // 1) Öncelik: İngilizce/uluslararası ad varsa onu Türkçeye çevir (daha isabetli çeviri verir)
+      if (cleanEn && !hasNonLatinScript(cleanEn)) {
+        const translatedEn = await translateToTurkish(cleanEn, 'en');
+        if (translatedEn && !hasNonLatinScript(translatedEn)) {
+          resolved = translatedEn;
+        } else {
+          resolved = cleanEn;
+        }
+      }
+
+      // 2) İngilizce ad yoksa orijinal dilden doğrudan Türkçeye çevir (ja|tr, hi|tr, ar|tr vb.)
+      if (!resolved && (cleanTr || cleanOrig)) {
+        const srcText = cleanTr || cleanOrig;
+        const srcLang = (originalLang && originalLang.length === 2 && originalLang !== 'tr') ? originalLang : 'auto';
+        const translatedOrig = await translateToTurkish(srcText, srcLang === 'auto' ? 'en' : srcLang);
+        if (translatedOrig && !hasNonLatinScript(translatedOrig)) {
+          resolved = translatedOrig;
+        }
+      }
+
+      const finalTitle = resolved || cleanEn || cleanTr || cleanOrig || 'İsimsiz Film';
+      titleTrCache.set(cacheKey, finalTitle);
+      return finalTitle;
+    }
+
+    async function translateToEnglish(text) {
+      const clean = (text || '').trim();
+      if (!clean) return '';
+      try {
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean.slice(0, 120))}&langpair=tr|en`);
+        if (!res.ok) return clean;
+        const data = await res.json();
+        const translated = (data?.responseData?.translatedText || '').trim();
+        if (translated && !translated.toUpperCase().includes('MYMEMORY WARNING')) {
+          return translated.replace(/[.!?]+$/g, '').trim();
+        }
+      } catch {}
+      return clean;
+    }
+
+    // TMDb Anahtar Kelime ID'lerini Bul (Önbellekli, Birden Fazla Eşleşme Destekli)
+    async function fetchTmdbKeywordIds(englishTerm) {
+      const key = (englishTerm || '').trim().toLowerCase();
+      if (!key) return [];
+      if (keywordCache.has(key)) return keywordCache.get(key);
+      try {
+        const res = await tmdbFetch('/search/keyword', { query: key });
+        const ids = (res?.results || []).slice(0, 4).map(r => String(r.id));
+        keywordCache.set(key, ids);
+        return ids;
+      } catch {
+        return [];
+      }
+    }
+
+    // Serbest Konu, Ülke Sineması veya Ruh Halini Sınırsız Şekilde Çözümle
+    async function resolveFreeTopic(rawText) {
+      const clean = (rawText || '').trim();
+      const lower = clean.toLowerCase();
+      const genreSet = new Set();
+      const englishTerms = [];
+      const countries = [];
+      const languages = [];
+      let remainder = lower;
+      let matchedCountry = false;
+      let matchedSpecificTopic = false;
+
+      // 0) Ülke / Sinema / Dil filtresi yakala (örn: "kore filmleri", "fransız dram", "japon")
+      for (const entry of COUNTRY_LANGUAGE_MAP) {
+        const hitKey = entry.keys.find(k => matchesWholeOrPrefix(remainder, k));
+        if (hitKey) {
+          matchedCountry = true;
+          if (entry.country) countries.push(...entry.country.split('|'));
+          if (entry.lang) languages.push(entry.lang);
+          const escaped = hitKey.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          remainder = remainder.replace(new RegExp(`(^|[\\s,.;:/+-])${escaped}[a-zçğıöşü]*`, 'gi'), ' ').trim();
+        }
+      }
+
+      // "filmleri", "filmi", "sineması", "tarzı" gibi dolgu kelimeleri temizle
+      remainder = remainder.replace(/\b(filmleri|filmler|filmi|film|sineması|sinemasi|sinema|tarzı|tarzi|olan|tür|türü|turu)\b/gi, ' ').replace(/\s+/g, ' ').trim();
+
+      // 1) Özgül konu sözlüğünden eşleşenleri al (örn: dövüş -> martial arts, fighting)
+      const searchTarget = remainder || lower;
+      if (remainder || !matchedCountry) {
+        for (const entry of SPECIFIC_TOPIC_KEYWORDS) {
+          if (entry.keys.some(k => matchesWholeOrPrefix(searchTarget, k))) {
+            matchedSpecificTopic = true;
+            entry.kw.forEach(term => englishTerms.push(term));
+            entry.genres.forEach(g => genreSet.add(g));
+          }
+        }
+      }
+
+      // 2) Genel ruh hali / tür eşleşmelerini al
+      let matchedMoodGenre = false;
+      if (remainder || !matchedCountry) {
+        for (const entry of MOOD_GENRE_MAP) {
+          if (entry.keys.some(k => matchesWholeOrPrefix(searchTarget, k))) {
+            matchedMoodGenre = true;
+            entry.genreIds.forEach(g => genreSet.add(g));
+          }
+        }
+      }
+
+      // 3) Kalan serbest Türkçe konu kelimesi varsa (ülke adı hariç) İngilizceye çevirip TMDb'de ara!
+      if (!matchedSpecificTopic && !matchedMoodGenre && remainder.length >= 2) {
+        const translated = await translateToEnglish(remainder);
+        if (translated) englishTerms.push(translated);
+        englishTerms.push(remainder);
+      } else if (!matchedSpecificTopic && !matchedCountry && remainder.split(/\s+/).length >= 2) {
+        const translated = await translateToEnglish(remainder);
+        if (translated) englishTerms.push(translated);
+      }
+
+      // 4) Tüm İngilizce terimler için TMDb anahtar kelime ID'lerini paralel çek
+      const uniqueTerms = Array.from(new Set(englishTerms)).slice(0, 3);
+      const kwIdArrays = await Promise.all(uniqueTerms.map(t => fetchTmdbKeywordIds(t)));
+      const keywordIds = Array.from(new Set(kwIdArrays.flat())).slice(0, 6);
+
+      return {
+        raw: clean,
+        displayLabel: clean.charAt(0).toUpperCase() + clean.slice(1),
+        genreIds: Array.from(genreSet),
+        keywordIds,
+        countries: Array.from(new Set(countries)),
+        languages: Array.from(new Set(languages)),
+        englishTerms: uniqueTerms
+      };
+    }
+
+    function applyOriginParams(params, countries = [], languages = []) {
+      if (countries.length) {
+        params.with_origin_country = Array.from(new Set(countries)).join('|');
+      } else if (languages.length === 1) {
+        params.with_original_language = languages[0];
+      }
+      return params;
+    }
+
+    // Çok Sayfalı TMDb Keşif Havuzu (Film ve Dizi destekli)
+    async function fetchMultiPageDiscover(baseParams, maxPagesToFetch = 3, mediaType = activeMediaType) {
+      const endpoint = mediaType === 'tv' ? '/discover/tv' : '/discover/movie';
+      const firstRes = await tmdbFetch(endpoint, { ...baseParams, page: 1 });
+      const results = [...(firstRes.results || [])];
+      const totalPages = Math.min(firstRes.total_pages || 1, 15);
+
+      if (totalPages > 1 && maxPagesToFetch > 1) {
+        const extraPages = new Set();
+        while (extraPages.size < Math.min(maxPagesToFetch - 1, totalPages - 1)) {
+          extraPages.add(Math.floor(Math.random() * (totalPages - 1)) + 2);
+        }
+        const extraResponses = await Promise.all(
+          Array.from(extraPages).map(pg => tmdbFetch(endpoint, { ...baseParams, page: pg }).catch(() => ({ results: [] })))
+        );
+        for (const r of extraResponses) {
+          results.push(...(r.results || []));
+        }
+      }
+      return results;
+    }
+
+    // Seçili platform, süre ve dönem parametrelerini discover sorgusuna ekle (Film + Dizi)
+    function applyPlatformParams(params, mediaType = activeMediaType) {
+      const providerIds = getSelectedPlatformIds();
+      if (providerIds.length) {
+        params.watch_region = 'TR';
+        params.with_watch_providers = providerIds.join('|');
+        params.with_watch_monetization_types = 'flatrate|free|ads';
+      }
+      if ($('shortRuntimeToggle')?.checked) {
+        params['with_runtime.lte'] = mediaType === 'tv' ? 45 : 105;
+      }
+      if ($('recentOnlyToggle')?.checked) {
+        if (mediaType === 'tv') params['first_air_date.gte'] = '2018-01-01';
+        else params['primary_release_date.gte'] = '2018-01-01';
+      }
+      return params;
+    }
+
+    function getExtraFilterLabels() {
+      const tags = [];
+      if ($('shortRuntimeToggle')?.checked) tags.push(activeMediaType === 'tv' ? 'Kısa bölüm (≤45 dk)' : '≤ 105 dk');
+      if ($('recentOnlyToggle')?.checked) tags.push('2018+');
+      return tags;
+    }
+
+    // Puan Hesaplama & Eleştirmen Merceği
+    function computeVerdict(movie, lens = 'balanced') {
+      const imdb100 = movie.imdb ? movie.imdb * 10 : null;
+      const critic100 = movie.rt !== null && movie.rt !== undefined
+        ? movie.rt
+        : (movie.metascore !== null && movie.metascore !== undefined ? movie.metascore : null);
+
+      let score = 75;
+      if (imdb100 !== null && critic100 !== null) {
+        if (lens === 'critic') score = Math.round(critic100 * 0.72 + imdb100 * 0.28);
+        else if (lens === 'audience') score = Math.round(imdb100 * 0.75 + critic100 * 0.25);
+        else score = Math.round(imdb100 * 0.52 + critic100 * 0.48);
+      } else if (imdb100 !== null) {
+        score = Math.round(imdb100);
+      } else if (critic100 !== null) {
+        score = Math.round(critic100);
+      }
+
+      score = Math.max(10, Math.min(99, score));
+      let label = 'Ortalama';
+      let colorClass = 'text-amber-400';
+      if (score >= 86) { label = 'Kaçırılmamalı'; colorClass = 'text-emerald-400'; }
+      else if (score >= 76) { label = 'İzlemeye Değer'; colorClass = 'text-emerald-300'; }
+      else if (score >= 65) { label = 'Şans Verilebilir'; colorClass = 'text-amber-300'; }
+      else { label = 'Beklentiyi Düşük Tut'; colorClass = 'text-rose-400'; }
+
+      return { score, label, colorClass };
+    }
+
+    function buildTurkishCriticNote(movie, verdict) {
+      if (movie.criticNote) return movie.criticNote;
+      const genreText = movie.genres.length ? movie.genres.slice(0, 2).join(' ve ').toLowerCase() : 'sinema';
+      const scoreParts = [];
+      if (movie.imdb) scoreParts.push(`IMDb'de ${movie.imdb.toFixed(1)}`);
+      if (movie.rt !== null && movie.rt !== undefined) scoreParts.push(`Rotten Tomatoes'ta %${movie.rt}`);
+      else if (movie.metascore) scoreParts.push(`Metacritic'te ${movie.metascore}/100`);
+
+      const leadText = scoreParts.length ? `${scoreParts.join(' ve ')} puanlarıyla öne çıkan yapım, ` : '';
+      if (verdict.score >= 85) {
+        return `${leadText}${genreText} türünde hem eleştirmenlerden hem izleyicilerden tam not alan güçlü bir film. ${movie.director !== '—' ? movie.director + ' imzasını taşıyan ' : ''}bu yapımı izleme listene gönül rahatlığıyla ekleyebilirsin.`;
+      }
+      if (verdict.score >= 75) {
+        return `${leadText}${genreText} sevenler için tatmin edici, dengeli ve sürükleyici bir tercih. Akşam keyifli ve nitelikli bir film arıyorsan beklentini karşılayacaktır.`;
+      }
+      if (verdict.score >= 65) {
+        return `${leadText}türün meraklılarına hitap eden, kusurlarına rağmen izlenebilir bir yapım. Özellikle ${movie.cast !== '—' ? 'oyuncu kadrosunu' : 'bu türü'} seviyorsan şans verebilirsin.`;
+      }
+      return `${leadText}eleştirmenleri ve izleyicileri ikiye bölen bir yapım. Sadece konusuna ya da kadrosuna özel ilgin varsa değerlendirmeni öneririm.`;
+    }
+
+    // Benzer film/dizi havuzundan 3'lü grup zenginleştir (OMDb IMDb + RT puanları + Türkçe başlık)
+    async function hydrateSimilarBatch(rawItems, mediaType = 'movie') {
+      const isTv = mediaType === 'tv';
+      const detailPrefix = isTv ? '/tv' : '/movie';
+      return Promise.all(rawItems.map(async (m) => {
+        const rawTitle = isTv ? (m.name || m.original_name) : (m.title || m.original_title);
+        const rawOrig = isTv ? (m.original_name || m.name) : (m.original_title || m.title);
+        const sYear = (isTv ? (m.first_air_date || '') : (m.release_date || '')).slice(0, 4);
+        let enTitle = '';
+        if (hasNonLatinScript(rawTitle)) {
+          const enInfo = await tmdbFetch(`${detailPrefix}/${m.id}`, { language: 'en-US' }).catch(() => null);
+          enTitle = isTv ? (enInfo?.name || '') : (enInfo?.title || '');
+        }
+        const omdbQueryTitle = enTitle || (!hasNonLatinScript(rawOrig) ? rawOrig : rawTitle);
+        const sOmdbRaw = await omdbFetch({ title: omdbQueryTitle, year: sYear, mediaType });
+        const sOmdb = extractOmdbRatings(sOmdbRaw);
+        const displayTitle = await resolveTurkishTitle({
+          trTitle: rawTitle,
+          enTitle: enTitle || (sOmdbRaw?.Title || ''),
+          originalTitle: rawOrig,
+          originalLang: m.original_language
+        });
+        const sGenres = (m.genre_ids || []).map(id => GENRE_TR[id]).filter(Boolean).slice(0, 2).join(' • ');
+        const reasonTag = m._reason ? `${m._reason}${sGenres ? ' • ' + sGenres : ''}` : (sGenres || 'Aynı temada yüksek puanlı');
+        return {
+          tmdbId: m.id,
+          mediaType,
+          title: displayTitle,
+          year: sYear,
+          imdb: sOmdb.imdb || (m.vote_average ? Number(m.vote_average.toFixed(1)) : null),
+          rt: sOmdb.rt,
+          posterUrl: m.poster_path ? `https://image.tmdb.org/t/p/w300${m.poster_path}` : (sOmdb.poster || ''),
+          note: reasonTag
+        };
+      }));
+    }
+
+    // TMDb Film veya Dizi Detayını Tam Paket Olarak Çek
+    async function fetchFullMovieByTmdbId(tmdbId, mediaType = activeMediaType) {
+      const isTv = mediaType === 'tv';
+      const basePath = isTv ? `/tv/${tmdbId}` : `/movie/${tmdbId}`;
+      const [trDetail, enDetail] = await Promise.all([
+        tmdbFetch(basePath, {
+          language: 'tr-TR',
+          append_to_response: 'credits,external_ids,recommendations,similar,watch/providers,keywords,videos'
+        }),
+        tmdbFetch(basePath, {
+          language: 'en-US',
+          append_to_response: 'videos'
+        }).catch(() => null)
+      ]);
+
+      const rawTrTitle = isTv ? trDetail.name : trDetail.title;
+      const originalTitle = isTv
+        ? (trDetail.original_name || enDetail?.name || trDetail.name)
+        : (trDetail.original_title || enDetail?.title || trDetail.title);
+      const enTitle = isTv ? (enDetail?.name || '') : (enDetail?.title || '');
+      const imdbId = trDetail.imdb_id || trDetail.external_ids?.imdb_id || enDetail?.imdb_id || '';
+      const year = (isTv
+        ? (trDetail.first_air_date || enDetail?.first_air_date || '')
+        : (trDetail.release_date || enDetail?.release_date || '')
+      ).slice(0, 4);
+
+      const omdbRaw = await omdbFetch({ imdbId, title: enTitle || originalTitle, year, mediaType });
+      const omdb = extractOmdbRatings(omdbRaw);
+
+      const resolvedTurkishTitle = await resolveTurkishTitle({
+        trTitle: rawTrTitle,
+        enTitle: enTitle || (omdbRaw?.Title || ''),
+        originalTitle,
+        originalLang: trDetail.original_language
+      });
+
+      const crew = trDetail.credits?.crew || [];
+      let directorItems = [];
+      if (isTv && Array.isArray(trDetail.created_by) && trDetail.created_by.length) {
+        directorItems = trDetail.created_by.slice(0, 2).map(c => ({ id: c.id || null, name: c.name }));
+      } else {
+        directorItems = crew
+          .filter(c => (c.job === 'Director' || (isTv && c.job === 'Executive Producer')) && c.name)
+          .slice(0, 2)
+          .map(c => ({ id: c.id || null, name: c.name }));
+      }
+      const director = directorItems.length ? directorItems.map(d => d.name).join(', ') : (omdb.director || '—');
+
+      const castItems = (trDetail.credits?.cast || [])
+        .filter(c => c && c.name)
+        .slice(0, 4)
+        .map(c => ({ id: c.id || null, name: c.name }));
+      const cast = castItems.length ? castItems.map(c => c.name).join(', ') : (omdb.actors || '—');
+
+      const posterUrl = trDetail.poster_path
+        ? `https://image.tmdb.org/t/p/w500${trDetail.poster_path}`
+        : (enDetail?.poster_path ? `https://image.tmdb.org/t/p/w500${enDetail.poster_path}` : omdb.poster);
+      const backdropUrl = trDetail.backdrop_path
+        ? `https://image.tmdb.org/t/p/w1280${trDetail.backdrop_path}`
+        : (enDetail?.backdrop_path ? `https://image.tmdb.org/t/p/w1280${enDetail.backdrop_path}` : '');
+
+      const watchProviders = extractTrWatchProviders(trDetail['watch/providers'], resolvedTurkishTitle || originalTitle);
+
+      // En iyi YouTube fragmanını seç
+      const pickBestYoutubeTrailer = (trVideos, enVideos) => {
+        const filterYt = (list) => (list || []).filter(v => v && v.site === 'YouTube' && v.key && (v.type === 'Trailer' || v.type === 'Teaser'));
+        const trList = filterYt(trVideos);
+        const enList = filterYt(enVideos);
+        const pickFrom = (list) =>
+          list.find(v => v.type === 'Trailer' && v.official) ||
+          list.find(v => v.type === 'Trailer') ||
+          list[0] || null;
+        const bestTr = pickFrom(trList);
+        if (bestTr) return { key: bestTr.key, name: bestTr.name || 'Türkçe Fragman', lang: 'Türkçe Fragman' };
+        const bestEn = pickFrom(enList);
+        if (bestEn) return { key: bestEn.key, name: bestEn.name || 'Resmî Fragman', lang: 'Orijinal Fragman' };
+        return null;
+      };
+      const trailer = pickBestYoutubeTrailer(trDetail.videos?.results, enDetail?.videos?.results);
+
+      let plot = (trDetail.overview || '').trim();
+      if (!plot && enDetail?.overview) {
+        plot = await translateToTurkish(enDetail.overview);
+      }
+      if (!plot) {
+        const gNames = (trDetail.genres || []).map(g => g.name).slice(0, 2).join(', ');
+        plot = `${resolvedTurkishTitle}, ${year || 'yakın dönem'} yapımı${gNames ? ` bir ${gNames.toLowerCase()} ${isTv ? 'dizisi' : 'filmi'}` : ` dikkat çekici bir ${isTv ? 'dizi' : 'sinema yapımı'}`}.`;
+      }
+
+      const genres = (trDetail.genres || []).map(g => GENRE_TR[g.id] || g.name).filter(Boolean);
+      const imdbScore = omdb.imdb || (trDetail.vote_average ? Number(trDetail.vote_average.toFixed(1)) : null);
+
+      let runtimeText = '';
+      if (isTv) {
+        const parts = [];
+        if (trDetail.number_of_seasons) parts.push(`${trDetail.number_of_seasons} Sezon`);
+        if (trDetail.number_of_episodes) parts.push(`${trDetail.number_of_episodes} Bölüm`);
+        runtimeText = parts.join(' • ');
+      } else if (trDetail.runtime) {
+        runtimeText = `${trDetail.runtime} dk`;
+      }
+
+      // Genişletilmiş Konu + Güncellik + İzleyici Örtüşmesi Benzer Motoru (Film + Dizi)
+      const movieGenreIds = (trDetail.genres || []).map(g => g.id);
+      const kwObjs = (isTv ? (trDetail.keywords?.results || []) : (trDetail.keywords?.keywords || [])).slice(0, 6);
+      const kwIdsStr = kwObjs.map(k => String(k.id)).join('|');
+      const primaryGenresStr = movieGenreIds.slice(0, 2).join('|');
+      const dateField = isTv ? 'first_air_date.gte' : 'primary_release_date.gte';
+
+      const [recPage2Res, kwRecentRes, kwBroadRes] = await Promise.all([
+        tmdbFetch(`${basePath}/recommendations`, { language: 'tr-TR', page: 2 }).catch(() => ({ results: [] })),
+        kwIdsStr
+          ? fetchMultiPageDiscover({
+              language: 'tr-TR',
+              sort_by: 'vote_average.desc',
+              include_adult: 'false',
+              with_keywords: kwIdsStr,
+              ...(primaryGenresStr ? { with_genres: primaryGenresStr } : {}),
+              [dateField]: '2014-01-01',
+              'vote_average.gte': 6.9,
+              'vote_count.gte': isTv ? 50 : 100,
+              'vote_count.lte': 12000
+            }, 2, mediaType).catch(() => [])
+          : Promise.resolve([]),
+        kwIdsStr
+          ? tmdbFetch(isTv ? '/discover/tv' : '/discover/movie', {
+              language: 'tr-TR',
+              sort_by: 'popularity.desc',
+              include_adult: 'false',
+              with_keywords: kwIdsStr,
+              [dateField]: '2012-01-01',
+              'vote_average.gte': 6.8,
+              'vote_count.gte': isTv ? 40 : 80,
+              page: 1
+            }).then(r => r.results || []).catch(() => [])
+          : Promise.resolve([])
+      ]);
+
+      const recPool = [...(trDetail.recommendations?.results || []), ...(recPage2Res.results || [])];
+      const simPool = trDetail.similar?.results || [];
+      const kwPool = [...kwRecentRes, ...kwBroadRes];
+
+      const recIdSet = new Set(recPool.map(m => m.id));
+      const kwIdSet = new Set(kwPool.map(m => m.id));
+      const scoredSim = new Map();
+
+      for (const item of [...kwPool, ...recPool, ...simPool]) {
+        if (!item || item.id === trDetail.id) continue;
+        if ((item.vote_average || 0) < 6.7 || (item.vote_count || 0) < (isTv ? 40 : 70)) continue;
+        if (scoredSim.has(item.id)) continue;
+
+        const dateStr = isTv ? (item.first_air_date || '') : (item.release_date || '');
+        const mYear = parseInt(dateStr.slice(0, 4), 10) || 2000;
+        const sharedGenres = (item.genre_ids || []).filter(id => movieGenreIds.includes(id)).length;
+        const inKw = kwIdSet.has(item.id);
+        const inRec = recIdSet.has(item.id);
+        const votes = item.vote_count || 0;
+
+        let score = 0;
+        if (inKw && inRec) score += 18;
+        else if (inKw) score += 10;
+        else if (inRec) score += 7;
+        else score += 2;
+
+        score += sharedGenres * 2.5;
+        if (mYear >= 2019) score += 5;
+        else if (mYear >= 2015) score += 3.5;
+        else if (mYear >= 2010) score += 1.5;
+        if (votes >= 120 && votes <= 7000) score += 3;
+        else if (votes > 16000) score -= 3.5;
+        score += ((item.vote_average || 7) - 6.7) * 2.2;
+
+        const reason = (inKw && inRec)
+          ? 'Aynı konu & yüksek uyum'
+          : (inKw ? 'Aynı tema' : (mYear >= 2018 ? 'Güncel benzer öneri' : 'Bunu izleyenlerin seçimi'));
+
+        scoredSim.set(item.id, { movie: { ...item, _reason: reason }, score });
+      }
+
+      const similarPoolRanked = Array.from(scoredSim.values())
+        .sort((a, b) => b.score - a.score)
+        .map(x => x.movie);
+
+      const topSimilarRaw = similarPoolRanked.slice(0, 3);
+      const similar = await hydrateSimilarBatch(topSimilarRaw, mediaType);
+
+      return {
+        id: `tmdb-${mediaType}-${trDetail.id}`,
+        tmdbId: trDetail.id,
+        mediaType,
+        imdbId,
+        title: resolvedTurkishTitle,
+        originalTitle: (enTitle && hasNonLatinScript(originalTitle)) ? `${enTitle} (${originalTitle})` : originalTitle,
+        year: year || '—',
+        runtime: runtimeText,
+        director,
+        directorItems,
+        cast,
+        castItems,
+        genres,
+        imdb: imdbScore,
+        imdbVotes: omdb.imdbVotes,
+        imdbFromOmdb: Boolean(omdb.imdb),
+        rt: omdb.rt,
+        metascore: omdb.metascore,
+        posterUrl,
+        backdropUrl,
+        watchProviders,
+        trailer,
+        plot,
+        criticNote: '',
+        sourceLabel: isTv ? 'Canlı Dizi Verisi (TMDb + OMDb)' : 'Canlı Veri (TMDb + OMDb)',
+        similar,
+        similarPool: similarPoolRanked,
+        similarOffset: 3
+      };
+    }
+
+    // Film veya Dizi Arama
+    async function searchMovie(query, forcedMediaType = activeMediaType) {
+      const clean = query.trim();
+      if (!clean) return;
+      const isTv = forcedMediaType === 'tv';
+      const searchEndpoint = isTv ? '/search/tv' : '/search/movie';
+      const noun = isTv ? 'dizi' : 'film';
+      $('moodBanner').classList.add('hidden');
+      showStatus(`"${clean}" ${noun} için canlı veriler, afiş, puanlar ve Türkiye izleme platformları getiriliyor...`, 'info');
+
+      try {
+        const searchRes = await tmdbFetch(searchEndpoint, { query: clean, language: 'tr-TR', include_adult: 'false' });
+        let results = searchRes.results || [];
+        if (!results.length) {
+          const enSearch = await tmdbFetch(searchEndpoint, { query: clean, language: 'en-US', include_adult: 'false' });
+          results = enSearch.results || [];
+        }
+        if (!results.length) {
+          if (!isTv) {
+            const fb = FALLBACK_MOVIES.find(m =>
+              m.title.toLowerCase().includes(clean.toLowerCase()) ||
+              m.originalTitle.toLowerCase().includes(clean.toLowerCase())
+            );
+            if (fb) {
+              renderMovie({ ...fb, mediaType: 'movie' });
+              hideStatus();
+              return;
+            }
+          }
+          showStatus(`"${clean}" adıyla eşleşen bir ${noun} bulunamadı. Orijinal veya Türkçe adını kontrol edip tekrar deneyebilirsin.`, 'error');
+          return;
+        }
+
+        const best = results.find(r => (r.vote_count || 0) >= 25) || results[0];
+        const fullMovie = await fetchFullMovieByTmdbId(best.id, forcedMediaType);
+        renderMovie(fullMovie);
+        hideStatus();
+      } catch (err) {
+        const fb = FALLBACK_MOVIES.find(m =>
+          m.title.toLowerCase().includes(clean.toLowerCase()) ||
+          m.originalTitle.toLowerCase().includes(clean.toLowerCase())
+        );
+        if (fb) {
+          renderMovie({ ...fb, sourceLabel: 'Çevrimdışı Yedek Veri' });
+          showStatus('Canlı bağlantıda geçici bir sorun oluştu; yedek kayıt gösteriliyor.', 'error');
+        } else {
+          showStatus(`Veri çekilirken bir hata oluştu: ${err.message}`, 'error');
+        }
+      }
+    }
+
+    // Tek Kişilik Serbest Konu / Ruh Hali Keşfi (Çok Sayfalı + Özgül Anahtar Kelime + Platform Filtreli)
+    async function recommendByMood(moodText) {
+      const raw = (moodText || '').trim();
+      if (!raw) {
+        showStatus('Lütfen bugünkü ruh halini veya izlemek istediğin konuyu yaz ya da etiketlerden birini seç.', 'error');
+        return;
+      }
+      activeRecMode = 'single';
+      lastSingleQuery = raw;
+
+      const hiddenGemsOnly = $('hiddenGemToggle').checked;
+      const platformLabels = getSelectedPlatformLabels();
+      const platformSuffix = platformLabels.length ? ` (${platformLabels.join(', ')})` : '';
+
+      showStatus(`"${raw}" için${platformSuffix} geniş film havuzu taranıyor...`, 'info');
+
+      try {
+        const mediaType = activeMediaType;
+        const isTv = mediaType === 'tv';
+        const dateField = isTv ? 'first_air_date.gte' : 'primary_release_date.gte';
+        const pref = await resolveFreeTopic(raw);
+        const mappedGenres = mapGenresForMediaType(pref.genreIds, mediaType);
+        const kwParam = pref.keywordIds.length ? pref.keywordIds.join('|') : '';
+        const genreParam = mappedGenres.length ? mappedGenres.join('|') : '';
+        const hasOrigin = pref.countries.length > 0 || pref.languages.length > 0;
+        const minVotesStrict = hasOrigin ? (isTv ? 25 : 45) : (hiddenGemsOnly ? (isTv ? 60 : 120) : (isTv ? 150 : 280));
+
+        const withAllFilters = (obj) => applyOriginParams(applyPlatformParams(obj, mediaType), pref.countries, pref.languages);
+        const queries = [];
+
+        // 1) Öncelik: Gerçek konu anahtar kelimeleri (+ varsa ülke/sinema filtresi)
+        if (kwParam) {
+          queries.push(withAllFilters({
+            language: 'tr-TR',
+            sort_by: 'vote_average.desc',
+            include_adult: 'false',
+            'vote_average.gte': 7.0,
+            'vote_count.gte': hasOrigin ? 30 : (hiddenGemsOnly ? 80 : 150),
+            ...(hiddenGemsOnly ? { 'vote_count.lte': 6000 } : {}),
+            with_keywords: kwParam,
+            ...(genreParam ? { with_genres: genreParam } : {})
+          }));
+          queries.push(withAllFilters({
+            language: 'tr-TR',
+            sort_by: 'popularity.desc',
+            include_adult: 'false',
+            'vote_average.gte': 6.6,
+            'vote_count.gte': hasOrigin ? 25 : 50,
+            with_keywords: kwParam
+          }));
+        }
+        // 2) Tür bazlı (+ varsa ülke/sinema filtresi)
+        if (genreParam) {
+          queries.push(withAllFilters({
+            language: 'tr-TR',
+            sort_by: 'vote_average.desc',
+            include_adult: 'false',
+            'vote_average.gte': 7.2,
+            'vote_count.gte': minVotesStrict,
+            ...(hiddenGemsOnly ? { 'vote_count.lte': 5000, [dateField]: '2010-01-01' } : {}),
+            with_genres: genreParam
+          }));
+          queries.push(withAllFilters({
+            language: 'tr-TR',
+            sort_by: 'popularity.desc',
+            include_adult: 'false',
+            'vote_average.gte': 6.8,
+            'vote_count.gte': hasOrigin ? 25 : 60,
+            with_genres: genreParam
+          }));
+        }
+        // 3) Sadece ülke/sinema girildiyse (örn: "kore filmleri", "fransız") veya hiçbir filtre yoksa
+        if (!queries.length || (hasOrigin && !kwParam && !genreParam)) {
+          queries.push(withAllFilters({
+            language: 'tr-TR',
+            sort_by: 'vote_average.desc',
+            include_adult: 'false',
+            'vote_average.gte': 7.2,
+            'vote_count.gte': hasOrigin ? 50 : 150,
+            ...(hiddenGemsOnly ? { 'vote_count.lte': 6500, [dateField]: '2008-01-01' } : {})
+          }));
+          queries.push(withAllFilters({
+            language: 'tr-TR',
+            sort_by: 'popularity.desc',
+            include_adult: 'false',
+            'vote_average.gte': 6.8,
+            'vote_count.gte': hasOrigin ? 30 : 80
+          }));
+        }
+
+        const candidateMap = new Map();
+        for (let i = 0; i < queries.length; i++) {
+          const batch = await fetchMultiPageDiscover(queries[i], 3);
+          for (const m of batch) {
+            if (!candidateMap.has(m.id)) {
+              candidateMap.set(m.id, { movie: m, priority: i === 0 && kwParam ? 2 : 1 });
+            }
+          }
+          if (candidateMap.size >= 35) break;
+        }
+
+        let pool = Array.from(candidateMap.values())
+          .sort((a, b) => (b.priority - a.priority) || ((b.movie.vote_average || 0) - (a.movie.vote_average || 0)))
+          .map(x => x.movie);
+
+        if (!pool.length) {
+          showStatus(
+            platformLabels.length
+              ? `Seçili platformlarda (${platformLabels.join(', ')}) "${raw}" için uygun film bulunamadı. Platform filtresini genişletip tekrar deneyebilirsin.`
+              : `"${raw}" konusu için uygun film bulunamadı. Farklı bir kelime deneyebilirsin.`,
+            'error'
+          );
+          return;
+        }
+
+        const watchedIds = getWatchedTmdbIdSet();
+        let unseen = pool.filter(m => !seenMoodIds.has(m.id) && !watchedIds.has(m.id));
+        if (!unseen.length) {
+          seenMoodIds.clear();
+          unseen = pool.filter(m => !watchedIds.has(m.id));
+        }
+        if (!unseen.length) {
+          seenMoodIds.clear();
+          unseen = pool;
+        }
+
+        const topSlice = unseen.slice(0, Math.min(unseen.length, 25));
+        const picked = topSlice[Math.floor(Math.random() * topSlice.length)];
+        seenMoodIds.add(picked.id);
+
+        const fullMovie = await fetchFullMovieByTmdbId(picked.id, activeMediaType);
+        renderMovie(fullMovie);
+
+        $('moodBannerTitle').textContent = 'Öneri:';
+        const extraTags = getExtraFilterLabels();
+        $('moodBannerText').textContent = ` ${pref.displayLabel}${platformLabels.length ? ` • ${platformLabels.join(', ')}` : ''}${extraTags.length ? ` • ${extraTags.join(', ')}` : ''} (${pool.length} film taranarak seçildi)`;
+        $('moodBanner').classList.remove('hidden');
+        hideStatus();
+      } catch (err) {
+        const fallbackPick = FALLBACK_MOVIES[Math.floor(Math.random() * FALLBACK_MOVIES.length)];
+        renderMovie({ ...fallbackPick, sourceLabel: 'Çevrimdışı Yedek Öneri' });
+        $('moodBannerTitle').textContent = 'Öneri:';
+        $('moodBannerText').textContent = ` ${raw} (Yedek Öneri)`;
+        $('moodBanner').classList.remove('hidden');
+        showStatus('Canlı keşif sırasında geçici bir sorun oluştu; yedek öneri gösterildi.', 'error');
+      }
+    }
+
+    // 2 Kişilik Ortak Film Seç — Sınırsız Serbest Konu + Çok Sayfalı Geniş Havuz + Çift Eşleşme Puanlaması
+    async function recommendJointMovie(text1, text2) {
+      const q1 = (text1 || '').trim();
+      const q2 = (text2 || '').trim();
+      if (!q1 || !q2) {
+        showStatus('Ortak film seçebilmem için lütfen hem 1. kişi hem 2. kişi kutusuna bir ruh hali veya konu yaz.', 'error');
+        return;
+      }
+
+      activeRecMode = 'joint';
+      lastJointQueries = { p1: q1, p2: q2 };
+
+      const hiddenGemsOnly = $('hiddenGemToggle').checked;
+      const platformLabels = getSelectedPlatformLabels();
+      const platformSuffix = platformLabels.length ? ` (${platformLabels.join(', ')})` : '';
+
+      showStatus(`"${q1}" ve "${q2}" için${platformSuffix} geniş film havuzunda ortak kesişim aranıyor...`, 'info');
+
+      try {
+        const [p1, p2] = await Promise.all([resolveFreeTopic(q1), resolveFreeTopic(q2)]);
+
+        const mediaType = activeMediaType;
+        const isTv = mediaType === 'tv';
+        const p1Genres = mapGenresForMediaType(p1.genreIds, mediaType);
+        const p2Genres = mapGenresForMediaType(p2.genreIds, mediaType);
+        const kw1 = p1.keywordIds.join('|');
+        const kw2 = p2.keywordIds.join('|');
+        const g1 = p1Genres[0] || null;
+        const g2 = p2Genres[0] || null;
+        const jointCountries = Array.from(new Set([...p1.countries, ...p2.countries]));
+        const jointLanguages = Array.from(new Set([...p1.languages, ...p2.languages]));
+        const hasOrigin = jointCountries.length > 0 || jointLanguages.length > 0;
+
+        const withJointFilters = (obj) => applyOriginParams(applyPlatformParams(obj, mediaType), jointCountries, jointLanguages);
+
+        const baseQuality = {
+          language: 'tr-TR',
+          include_adult: 'false',
+          'vote_average.gte': 6.7,
+          'vote_count.gte': hasOrigin ? 30 : (hiddenGemsOnly ? 60 : 120),
+          ...(hiddenGemsOnly ? { 'vote_count.lte': 8000 } : {})
+        };
+
+        // Paralel çok katmanlı sorgular: ülke/sinema + konu kesişimi + tür kesişimi
+        const queryTasks = [];
+
+        // A) En Keskin Kesişim: 1. Kişinin konusu + 2. Kişinin türü (ve tersi)
+        if (kw1 && g2) {
+          queryTasks.push({
+            tag: 'both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc', with_keywords: kw1, with_genres: String(g2) }), 3)
+          });
+        }
+        if (kw2 && g1) {
+          queryTasks.push({
+            tag: 'both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc', with_keywords: kw2, with_genres: String(g1) }), 3)
+          });
+        }
+        // B) Her iki kişinin de özgül anahtar kelimesi varsa havuzlarını çekip kesiştir
+        if (kw1 && kw2) {
+          queryTasks.push({
+            tag: 'p1_kw',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'popularity.desc', with_keywords: kw1 }), 3)
+          });
+          queryTasks.push({
+            tag: 'p2_kw',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'popularity.desc', with_keywords: kw2 }), 3)
+          });
+        } else {
+          if (kw1) {
+            queryTasks.push({
+              tag: hasOrigin ? 'both' : 'p1_kw',
+              promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc', with_keywords: kw1 }), 3)
+            });
+          }
+          if (kw2) {
+            queryTasks.push({
+              tag: hasOrigin ? 'both' : 'p2_kw',
+              promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc', with_keywords: kw2 }), 3)
+            });
+          }
+        }
+        // C) Tür kesişimi (AND = virgül) veya Ülke + Tek Tür kesişimi (örn: Kore + Romantik!)
+        if (g1 && g2) {
+          const andGenres = Array.from(new Set([g1, g2])).join(',');
+          queryTasks.push({
+            tag: 'genre_both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc', with_genres: andGenres }), 3)
+          });
+          queryTasks.push({
+            tag: 'genre_both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'popularity.desc', with_genres: andGenres }), 2)
+          });
+        } else if (hasOrigin && (g1 || g2)) {
+          const singleG = String(g1 || g2);
+          queryTasks.push({
+            tag: 'both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc', with_genres: singleG }), 3)
+          });
+          queryTasks.push({
+            tag: 'both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'popularity.desc', with_genres: singleG }), 2)
+          });
+        } else if (hasOrigin && !kw1 && !kw2) {
+          // Örn: 1. Kişi: Kore, 2. Kişi: Fransız
+          queryTasks.push({
+            tag: 'both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'vote_average.desc' }), 3)
+          });
+          queryTasks.push({
+            tag: 'both',
+            promise: fetchMultiPageDiscover(withJointFilters({ ...baseQuality, sort_by: 'popularity.desc' }), 2)
+          });
+        }
+
+        const taskResults = await Promise.all(
+          queryTasks.map(t => t.promise.then(res => ({ tag: t.tag, res })).catch(() => ({ tag: t.tag, res: [] })))
+        );
+
+        // Adayları birleştir ve her filmin 1. Kişi + 2. Kişi ortak eşleşme skorunu hesapla
+        const scoredMap = new Map();
+        const p1KwIds = new Set();
+        const p2KwIds = new Set();
+
+        for (const { tag, res } of taskResults) {
+          for (const m of res) {
+            if (tag === 'p1_kw') p1KwIds.add(m.id);
+            if (tag === 'p2_kw') p2KwIds.add(m.id);
+            if (!scoredMap.has(m.id)) {
+              scoredMap.set(m.id, { movie: m, score: 0, directBoth: false });
+            }
+            const entry = scoredMap.get(m.id);
+            if (tag === 'both') {
+              entry.score += 10;
+              entry.directBoth = true;
+            } else if (tag === 'genre_both') {
+              entry.score += 5;
+            } else {
+              entry.score += 3;
+            }
+          }
+        }
+
+        // Eğer hem p1_kw hem p2_kw havuzunda birden çıktıysa -> gerçek çift konu kesişimi!
+        for (const [id, entry] of scoredMap.entries()) {
+          const m = entry.movie;
+          const mGenres = m.genre_ids || [];
+          const hitP1 = p1KwIds.has(id) || (p1.genreIds.length && p1.genreIds.some(g => mGenres.includes(g)));
+          const hitP2 = p2KwIds.has(id) || (p2.genreIds.length && p2.genreIds.some(g => mGenres.includes(g)));
+
+          if (p1KwIds.has(id) && p2KwIds.has(id)) {
+            entry.score += 14;
+            entry.directBoth = true;
+          } else if (hitP1 && hitP2) {
+            entry.score += 6;
+          }
+          // Puan bonusu
+          entry.score += ((m.vote_average || 7) - 6.5) * 1.5;
+        }
+
+        // Çok dar kaldıysa gizli hazine üst sınırını kaldırıp bir kez daha genişlet
+        if (scoredMap.size < 6 && hiddenGemsOnly && (g1 || g2 || kw1 || kw2)) {
+          const fallbackParams = withJointFilters({
+            language: 'tr-TR',
+            sort_by: 'popularity.desc',
+            include_adult: 'false',
+            'vote_average.gte': 6.5,
+            'vote_count.gte': hasOrigin ? 20 : 40,
+            ...(g1 && g2 ? { with_genres: Array.from(new Set([g1, g2])).join(',') } : (g1 || g2 ? { with_genres: String(g1 || g2) } : {})),
+            ...(kw1 || kw2 ? { with_keywords: [kw1, kw2].filter(Boolean).join('|') } : {})
+          });
+          const extra = await fetchMultiPageDiscover(fallbackParams, 2).catch(() => []);
+          for (const m of extra) {
+            if (!scoredMap.has(m.id)) {
+              scoredMap.set(m.id, { movie: m, score: (m.vote_average || 6.5), directBoth: false });
+            }
+          }
+        }
+
+        const ranked = Array.from(scoredMap.values())
+          .sort((a, b) => b.score - a.score)
+          .map(x => x.movie);
+
+        if (!ranked.length) {
+          showStatus(
+            platformLabels.length
+              ? `Seçili platformlarda (${platformLabels.join(', ')}) "${q1}" ve "${q2}" kesişiminde film bulunamadı. Platform filtresini kaldırıp veya genişletip tekrar deneyebilirsin.`
+              : `"${q1}" ve "${q2}" için ortak film bulunamadı. Konulardan birini biraz daha farklı bir kelimeyle yazıp deneyebilirsin.`,
+            'error'
+          );
+          return;
+        }
+
+        const watchedIds = getWatchedTmdbIdSet();
+        let unseen = ranked.filter(m => !seenJointIds.has(m.id) && !watchedIds.has(m.id));
+        if (!unseen.length) {
+          seenJointIds.clear();
+          unseen = ranked.filter(m => !watchedIds.has(m.id));
+        }
+        if (!unseen.length) {
+          seenJointIds.clear();
+          unseen = ranked;
+        }
+
+        // En yüksek skorlu ilk 20 ortak aday arasından çeşitlilikle seç
+        const topPool = unseen.slice(0, Math.min(unseen.length, 20));
+        const picked = topPool[Math.floor(Math.random() * topPool.length)];
+        seenJointIds.add(picked.id);
+
+        const fullMovie = await fetchFullMovieByTmdbId(picked.id, activeMediaType);
+        renderMovie(fullMovie);
+
+        $('moodBannerTitle').textContent = '2 Kişilik Ortak Seçim:';
+        const extraTags = getExtraFilterLabels();
+        $('moodBannerText').textContent = ` ${p1.displayLabel} + ${p2.displayLabel}${platformLabels.length ? ` • ${platformLabels.join(', ')}` : ''}${extraTags.length ? ` • ${extraTags.join(', ')}` : ''} (${ranked.length} ortak aday içinden seçildi)`;
+        $('moodBanner').classList.remove('hidden');
+        hideStatus();
+      } catch (err) {
+        showStatus(`Ortak film aranırken bir hata oluştu: ${err.message}`, 'error');
+      }
+    }
+
+    // Fragman Kartını Çiz (Direkt oynatmaz; kullanıcı tıklayınca oynatır)
+    function renderTrailer(movie) {
+      const container = $('trailerContent');
+      const badge = $('trailerLangBadge');
+      const ytLink = $('trailerYoutubeLink');
+      const t = movie.trailer || null;
+      const ytSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent((movie.title || movie.originalTitle || '') + ' ' + (movie.year || '') + ' fragman')}`;
+
+      if (!t || !t.key) {
+        badge.classList.add('hidden');
+        ytLink.href = ytSearchUrl;
+        ytLink.textContent = "YouTube'da Ara ↗";
+        container.innerHTML = `
+          <div class="rounded-xl bg-cinema-bg/70 border border-cinema-border/70 p-3.5 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-xs text-slate-300">Bu film için kayıtlı doğrudan fragman bulunamadı.</p>
+            <a href="${ytSearchUrl}" target="_blank" rel="noopener noreferrer"
+              class="px-3 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-semibold transition whitespace-nowrap">
+              YouTube'da Fragman Ara ↗
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      badge.textContent = t.lang || 'Fragman';
+      badge.classList.remove('hidden');
+      ytLink.href = `https://www.youtube.com/watch?v=${encodeURIComponent(t.key)}`;
+      ytLink.textContent = "YouTube'da Aç ↗";
+
+      const thumbUrl = `https://img.youtube.com/vi/${encodeURIComponent(t.key)}/hqdefault.jpg`;
+      container.innerHTML = `
+        <button id="playTrailerBtn" type="button"
+          class="relative w-full aspect-video rounded-xl overflow-hidden border border-cinema-border bg-black group block text-left">
+          <img src="${thumbUrl}" alt="${escapeHtml(movie.title)} fragman önizlemesi"
+            class="w-full h-full object-cover opacity-80 group-hover:opacity-95 group-hover:scale-[1.01] transition duration-300" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent flex flex-col items-center justify-center p-4">
+            <div class="w-16 h-16 rounded-full bg-rose-600 group-hover:bg-rose-500 text-white flex items-center justify-center shadow-2xl shadow-rose-900/60 transition transform group-hover:scale-105">
+              <svg class="w-7 h-7 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <span class="mt-3 px-3 py-1 rounded-full bg-black/70 border border-white/15 text-xs font-semibold text-white">
+              Fragmanı Oynatmak İçin Tıkla
+            </span>
+          </div>
+        </button>
+      `;
+
+      const playBtn = $('playTrailerBtn');
+      if (playBtn) {
+        playBtn.addEventListener('click', () => {
+          const originParam = (window.location.origin && window.location.origin.startsWith('https://'))
+            ? `&origin=${encodeURIComponent(window.location.origin)}`
+            : '';
+          const embedUrl = `https://www.youtube.com/embed/${encodeURIComponent(t.key)}?autoplay=1&rel=0&playsinline=1${originParam}`;
+          container.innerHTML = `
+            <div class="w-full aspect-video rounded-xl overflow-hidden border border-cinema-border bg-black">
+              <iframe
+                src="${embedUrl}"
+                title="${escapeHtml(movie.title)} Fragman"
+                class="w-full h-full"
+                frameborder="0"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          `;
+        });
+      }
+    }
+
+        // Türkiye İzleme Platformlarını Çiz
+    function renderWatchProviders(movie) {
+      const wp = movie.watchProviders;
+      const container = $('watchProvidersContent');
+      const allLink = $('watchAllLink');
+      const fallbackSearchUrl = `https://www.justwatch.com/tr/ara?q=${encodeURIComponent(movie.title || movie.originalTitle || '')}`;
+
+      allLink.href = (wp && wp.link) ? wp.link : fallbackSearchUrl;
+
+      if (!wp) {
+        container.innerHTML = `
+          <div class="rounded-xl bg-cinema-bg/70 border border-cinema-border/70 p-3.5 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-xs text-slate-300">Çevrimdışı yedek kayıt gösterildiği için canlı platform bilgisi çekilemedi.</p>
+            <a href="${fallbackSearchUrl}" target="_blank" rel="noopener noreferrer"
+              class="px-3 py-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 text-sky-300 text-xs font-semibold transition">
+              JustWatch Türkiye'de Ara ↗
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      if (!wp.hasAny) {
+        container.innerHTML = `
+          <div class="rounded-xl bg-cinema-bg/70 border border-cinema-border/70 p-3.5 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-xs text-slate-300">
+              Bu film şu anda Türkiye'deki dijital abonelik veya kiralama platformlarında listelenmiyor.
+            </p>
+            <a href="${fallbackSearchUrl}" target="_blank" rel="noopener noreferrer"
+              class="px-3 py-1.5 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/30 text-sky-300 text-xs font-semibold transition whitespace-nowrap">
+              JustWatch Türkiye'de Kontrol Et ↗
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      const renderGroup = (label, badgeClass, items, linkUrl) => {
+        if (!items.length) return '';
+        const chips = items.map(p => `
+          <a href="${linkUrl}" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2.5 px-3 py-2 rounded-xl bg-cinema-surface hover:bg-slate-800 border border-cinema-border hover:border-sky-500/50 transition">
+            ${p.logo
+              ? `<img src="${p.logo}" alt="${escapeHtml(p.name)}" class="w-7 h-7 rounded-lg object-cover shrink-0" />`
+              : `<span class="w-7 h-7 rounded-lg bg-cinema-card flex items-center justify-center text-xs">▶</span>`}
+            <div class="leading-tight">
+              <div class="text-xs font-bold text-white">${escapeHtml(p.name)}</div>
+              ${p.actionLabel ? `<div class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(p.actionLabel)}</div>` : ''}
+            </div>
+          </a>
+        `).join('');
+
+        return `
+          <div class="space-y-2">
+            <div class="inline-flex items-center gap-1.5 text-[11px] font-semibold ${badgeClass}">
+              <span>${label}</span>
+            </div>
+            <div class="flex flex-wrap gap-2">${chips}</div>
+          </div>
+        `;
+      };
+
+      const sections = [
+        renderGroup('Abonelikle İzle (Netflix, Prime, Disney+, MUBI vb.)', 'text-emerald-300', wp.flatrate, wp.link),
+        renderGroup('Ücretsiz / Reklamlı İzle', 'text-sky-300', wp.freeAds, wp.link),
+        renderGroup('Kiralama / Satın Alma', 'text-amber-300', wp.rentBuy, wp.link)
+      ].filter(Boolean);
+
+      container.innerHTML = sections.join('');
+    }
+
+    // Ekrana Çizme (Film & Dizi)
+    function renderMovie(movie) {
+      currentMovie = movie;
+      const isTv = movie.mediaType === 'tv';
+      $('resultSection').classList.remove('hidden');
+      $('directorRoleLabel').textContent = isTv ? 'Yaratıcı / Yönetmen' : 'Yönetmen';
+      $('plotHeadingLabel').textContent = isTv ? 'Dizinin Konusu' : 'Filmin Konusu';
+      $('trailerHeadingLabel').textContent = isTv ? 'Dizi Fragmanı' : 'Film Fragmanı';
+      $('watchHeadingLabel').textContent = isTv ? 'Bu Diziyi Hangi Platformdan İzleyebilirsin?' : 'Bu Filmi Hangi Platformdan İzleyebilirsin?';
+      $('similarHeadingLabel').textContent = isTv ? 'Benzer Yüksek Puanlı Diziler' : 'Benzer Yüksek Puanlı Filmler';
+
+      $('sourceBadge').textContent = movie.sourceLabel || 'Canlı Veri';
+      $('movieYear').textContent = movie.year || '';
+      $('movieRuntime').textContent = movie.runtime ? `• ${movie.runtime}` : '';
+      $('movieTitle').textContent = movie.title;
+
+      if (movie.originalTitle && movie.originalTitle.toLowerCase() !== movie.title.toLowerCase()) {
+        $('movieOriginalTitle').textContent = `Orijinal adı: ${movie.originalTitle}`;
+        $('movieOriginalTitle').classList.remove('hidden');
+      } else {
+        $('movieOriginalTitle').classList.add('hidden');
+      }
+
+      const posterImg = $('moviePoster');
+      const posterFallback = $('moviePosterFallback');
+      const backdropDiv = $('movieBackdrop');
+
+      if (movie.posterUrl) {
+        posterImg.src = movie.posterUrl;
+        posterImg.alt = `${movie.title} afişi`;
+        posterImg.classList.remove('hidden');
+        posterFallback.classList.add('hidden');
+        posterImg.onerror = () => {
+          posterImg.classList.add('hidden');
+          posterFallback.classList.remove('hidden');
+        };
+      } else {
+        posterImg.src = '';
+        posterImg.classList.add('hidden');
+        posterFallback.classList.remove('hidden');
+      }
+
+      if (movie.backdropUrl) {
+        backdropDiv.style.backgroundImage = `url('${movie.backdropUrl}')`;
+        backdropDiv.classList.remove('hidden');
+      } else {
+        backdropDiv.style.backgroundImage = '';
+        backdropDiv.classList.add('hidden');
+      }
+
+      $('movieGenres').innerHTML = (movie.genres || []).map(g =>
+        `<span class="px-2.5 py-0.5 rounded-md bg-cinema-card border border-cinema-border text-[11px] font-medium text-slate-300">${escapeHtml(g)}</span>`
+      ).join('');
+
+      renderClickablePeople($('movieDirector'), movie.directorItems, movie.director, 'Yönetmen');
+      renderClickablePeople($('movieCast'), movie.castItems, movie.cast, 'Oyuncu');
+
+      $('imdbScore').textContent = movie.imdb ? `${Number(movie.imdb).toFixed(1)} / 10` : 'Veri yok';
+      $('imdbVotes').textContent = movie.imdbVotes
+        ? `${movie.imdbVotes} oy`
+        : (movie.imdbFromOmdb === false ? 'TMDb izleyici puanı' : '');
+
+      if (movie.rt !== null && movie.rt !== undefined) {
+        $('rtScore').textContent = `%${movie.rt}`;
+        $('rtSub').textContent = movie.rt >= 60 ? 'Taze (Eleştirmen)' : 'Çürük (Eleştirmen)';
+      } else if (movie.metascore) {
+        $('rtScore').textContent = `${movie.metascore} / 100`;
+        $('rtSub').textContent = 'Metascore (RT verisi yok)';
+      } else {
+        $('rtScore').textContent = 'Veri yok';
+        $('rtSub').textContent = 'RT sayfasından kontrol edebilirsin';
+      }
+
+      const imdbLink = $('imdbLink');
+      if (movie.imdbId) {
+        imdbLink.href = `https://www.imdb.com/title/${movie.imdbId}/`;
+        imdbLink.classList.remove('hidden');
+      } else {
+        imdbLink.classList.add('hidden');
+      }
+      const rtSearchName = encodeURIComponent(movie.originalTitle || movie.title);
+      $('rtLink').href = `https://www.rottentomatoes.com/search?search=${rtSearchName}`;
+
+      $('moviePlot').textContent = movie.plot;
+
+      updateVerdictUI();
+      renderTrailer(movie);
+      renderWatchProviders(movie);
+      updateWatchlistButton();
+      updateWatchedButton();
+      updateShareLinks(movie);
+
+      renderSimilarList(movie.similar || [], (movie.similarPool || []).length > 3);
+    }
+
+    function renderSimilarList(simList, hasMore) {
+      const simGrid = $('similarGrid');
+      const refreshBtn = $('refreshSimilarBtn');
+      refreshBtn.classList.toggle('hidden', !hasMore);
+
+      if (!simList.length) {
+        $('similarSection').classList.add('hidden');
+        return;
+      }
+      $('similarSection').classList.remove('hidden');
+      simGrid.innerHTML = simList.map((s, idx) => `
+        <button type="button" data-similar-idx="${idx}"
+          class="text-left rounded-xl bg-cinema-surface hover:bg-cinema-card border border-cinema-border hover:border-rose-500/60 p-3 flex gap-3 items-start transition group">
+          <div class="w-14 aspect-[2/3] rounded-lg overflow-hidden bg-cinema-card border border-cinema-border shrink-0 flex items-center justify-center">
+            ${s.posterUrl
+              ? `<img src="${s.posterUrl}" alt="${escapeHtml(s.title)}" class="w-full h-full object-cover" />`
+              : `<span class="text-slate-600 text-xs">🎬</span>`}
+          </div>
+          <div class="min-w-0 flex-1 space-y-1">
+            <div class="font-bold text-sm text-white group-hover:text-rose-300 truncate">${escapeHtml(s.title)}</div>
+            <div class="text-[11px] text-slate-400">${escapeHtml(s.year || '')} ${s.note ? `• ${escapeHtml(s.note)}` : ''}</div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${s.imdb ? `<span class="px-1.5 py-0.5 rounded bg-amber-400/15 text-amber-300 text-[11px] font-bold">★ ${Number(s.imdb).toFixed(1)}</span>` : ''}
+              ${s.rt !== null && s.rt !== undefined ? `<span class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-300 text-[11px] font-bold">🍅 %${s.rt}</span>` : ''}
+            </div>
+          </div>
+        </button>
+      `).join('');
+
+      simGrid.querySelectorAll('[data-similar-idx]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const item = simList[Number(btn.dataset.similarIdx)];
+          if (item.tmdbId) {
+            $('moodBanner').classList.add('hidden');
+            showStatus(`"${item.title}" getiriliyor...`, 'info');
+            fetchFullMovieByTmdbId(item.tmdbId, item.mediaType || currentMovie?.mediaType || activeMediaType).then(full => {
+              renderMovie(full);
+              hideStatus();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }).catch(() => searchMovie(item.title));
+          } else {
+            searchMovie(item.title);
+          }
+        });
+      });
+    }
+
+        function updateVerdictUI() {
+      if (!currentMovie) return;
+      const verdict = computeVerdict(currentMovie, currentLens);
+      const scoreEl = $('verdictScore');
+      scoreEl.textContent = String(verdict.score);
+      scoreEl.className = `text-3xl font-black leading-none ${verdict.colorClass}`;
+      $('verdictLabel').textContent = verdict.label;
+      $('movieCriticNote').textContent = buildTurkishCriticNote(currentMovie, verdict);
+
+      document.querySelectorAll('.lens-btn').forEach(btn => {
+        const active = btn.dataset.lens === currentLens;
+        btn.className = `lens-btn px-2 py-1.5 rounded-lg text-[11px] font-semibold transition ${
+          active ? 'bg-rose-600 text-white' : 'bg-cinema-bg text-slate-400 hover:text-white'
+        }`;
+      });
+    }
+
+    // Film / Dizi Modu Geçişi
+    function switchMediaType(type) {
+      activeMediaType = type === 'tv' ? 'tv' : 'movie';
+      const isTv = activeMediaType === 'tv';
+
+      $('mediaTypeMovieBtn').className = `px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
+        !isTv ? 'bg-rose-600 text-white shadow' : 'text-slate-300 hover:text-white'
+      }`;
+      $('mediaTypeTvBtn').className = `px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition ${
+        isTv ? 'bg-rose-600 text-white shadow' : 'text-slate-300 hover:text-white'
+      }`;
+
+      $('heroHeading').textContent = isTv ? 'Bu dizi izlemeye değer mi?' : 'Bu film izlemeye değer mi?';
+      $('heroSubtext').textContent = isTv
+        ? 'Dizi adını yaz, bugünkü ruh halini seç ya da iki kişilik ortak dizi bul; güncel IMDb, Rotten Tomatoes puanlarını, Türkiye izleme platformlarını ve yüksek puanlı benzer dizileri anında gör.'
+        : 'Film adını yaz, bugünkü ruh halini seç ya da iki kişilik ortak film bul; güncel IMDb, Rotten Tomatoes puanlarını, Türkiye izleme platformlarını ve yüksek puanlı benzer filmleri anında gör.';
+      $('movieInput').placeholder = isTv
+        ? 'Dizi adı yazın (örn: Breaking Bad, Severance, Dark, The Bear, Şahsiyet...)'
+        : 'Film adı yazın (örn: Parazit, Başlangıç, Past Lives, Kış Uykusu...)';
+      $('tabJointMode').textContent = isTv ? '2 Kişilik Ortak Dizi Seç' : '2 Kişilik Ortak Film Seç';
+      $('jointBtn').textContent = isTv ? 'Ortak Dizi Öner' : 'Ortak Film Öner';
+      $('shortRuntimeLabel').textContent = isTv ? 'Kısa bölüm (≤45 dk)' : '≤ 105 dk';
+
+      seenMoodIds.clear();
+      seenJointIds.clear();
+      hideStatus();
+    }
+
+        // Sekme Değiştirme
+    function switchDiscoveryTab(mode) {
+      const isJoint = mode === 'joint';
+      $('singleMoodPanel').classList.toggle('hidden', isJoint);
+      $('jointMoodPanel').classList.toggle('hidden', !isJoint);
+
+      $('tabSingleMode').className = `px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+        !isJoint ? 'bg-amber-500 text-slate-950' : 'text-slate-300 hover:text-white'
+      }`;
+      $('tabJointMode').className = `px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+        isJoint ? 'bg-gradient-to-r from-rose-600 to-amber-500 text-white' : 'text-slate-300 hover:text-white'
+      }`;
+    }
+
+    // Tıklanabilir Yönetmen & Başrol Oyuncuları
+    function renderClickablePeople(container, items, fallbackText, roleLabel) {
+      if (Array.isArray(items) && items.length) {
+        container.innerHTML = `<div class="flex flex-wrap gap-1.5 mt-1">${items.map(person =>
+          person.id
+            ? `<button type="button" data-person-id="${person.id}" data-person-name="${escapeHtml(person.name)}" data-person-role="${roleLabel}"
+                class="px-2 py-0.5 rounded-lg bg-cinema-surface hover:bg-rose-500/20 border border-cinema-border hover:border-rose-400/50 text-xs font-semibold text-white hover:text-rose-200 transition">
+                ${escapeHtml(person.name)}
+              </button>`
+            : `<span class="text-sm font-semibold text-white">${escapeHtml(person.name)}</span>`
+        ).join('')}</div>`;
+
+        container.querySelectorAll('[data-person-id]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            openPersonFilmography(Number(btn.dataset.personId), btn.dataset.personName, btn.dataset.personRole);
+          });
+        });
+      } else {
+        container.textContent = fallbackText || '—';
+      }
+    }
+
+    async function openPersonFilmography(personId, personName, roleLabel) {
+      $('personModalName').textContent = personName;
+      $('personModalRole').textContent = `${roleLabel} • En yüksek puanlı filmleri`;
+      $('personModalBody').innerHTML = '<p class="text-sm text-slate-400 text-center py-6">Filmografi yükleniyor...</p>';
+      $('personModal').classList.remove('hidden');
+
+      try {
+        const credits = await tmdbFetch(`/person/${personId}/combined_credits`, { language: 'tr-TR' });
+        let rawList = [];
+        if (roleLabel === 'Yönetmen') {
+          rawList = (credits.crew || []).filter(c => c.job === 'Director' || c.job === 'Creator' || c.job === 'Executive Producer');
+        } else {
+          rawList = credits.cast || [];
+        }
+        rawList = rawList.filter(c => c.media_type === 'movie' || c.media_type === 'tv');
+        if (!rawList.length) {
+          rawList = [...(credits.cast || []), ...(credits.crew || [])];
+        }
+
+        const seen = new Set();
+        const filtered = rawList
+          .filter(m => {
+            if (!m || !m.id || seen.has(m.id)) return false;
+            if (currentMovie && m.id === currentMovie.tmdbId) return false;
+            seen.add(m.id);
+            return (m.vote_count || 0) >= 40 && (m.vote_average || 0) >= 6.0;
+          })
+          .sort((a, b) => ((b.vote_average || 0) * 10 + Math.log10((b.vote_count || 1) + 1) * 3) - ((a.vote_average || 0) * 10 + Math.log10((a.vote_count || 1) + 1) * 3))
+          .slice(0, 12);
+
+        if (!filtered.length) {
+          $('personModalBody').innerHTML = '<p class="text-sm text-slate-400 text-center py-6">Bu kişi için listelenecek başka yüksek puanlı film bulunamadı.</p>';
+          return;
+        }
+
+        const items = await Promise.all(filtered.map(async (m) => {
+          const isTvItem = m.media_type === 'tv';
+          let title = isTvItem ? (m.name || m.original_name) : (m.title || m.original_title);
+          const orig = isTvItem ? (m.original_name || m.name) : (m.original_title || m.title);
+          if (hasNonLatinScript(title)) {
+            title = await resolveTurkishTitle({
+              trTitle: title,
+              enTitle: '',
+              originalTitle: orig,
+              originalLang: m.original_language
+            });
+          }
+          return {
+            id: m.id,
+            mediaType: isTvItem ? 'tv' : 'movie',
+            title,
+            year: (isTvItem ? (m.first_air_date || '') : (m.release_date || '')).slice(0, 4),
+            rating: m.vote_average ? Number(m.vote_average).toFixed(1) : '',
+            poster: m.poster_path ? `https://image.tmdb.org/t/p/w154${m.poster_path}` : ''
+          };
+        }));
+
+        $('personModalBody').innerHTML = items.map(item => `
+          <button type="button" data-person-movie="${item.id}" data-person-type="${item.mediaType}" data-person-title="${escapeHtml(item.title)}"
+            class="w-full text-left flex items-center gap-3 rounded-xl bg-cinema-card hover:bg-slate-800 border border-cinema-border hover:border-rose-500/50 p-2.5 transition">
+            <div class="w-10 aspect-[2/3] rounded-lg overflow-hidden bg-cinema-surface border border-cinema-border shrink-0 flex items-center justify-center">
+              ${item.poster ? `<img src="${item.poster}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover" />` : '<span class="text-xs text-slate-600">🎬</span>'}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-bold text-white truncate">${escapeHtml(item.title)}</div>
+              <div class="text-xs text-slate-400">${item.mediaType === 'tv' ? 'Dizi' : 'Film'} • ${escapeHtml(item.year || '—')} ${item.rating ? `• ★ ${item.rating}` : ''}</div>
+            </div>
+            <span class="text-xs text-rose-300 font-semibold shrink-0">Aç →</span>
+          </button>
+        `).join('');
+
+        $('personModalBody').querySelectorAll('[data-person-movie]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const mId = Number(btn.dataset.personMovie);
+            const mType = btn.dataset.personType || 'movie';
+            const mTitle = btn.dataset.personTitle;
+            $('personModal').classList.add('hidden');
+            $('moodBanner').classList.add('hidden');
+            showStatus(`"${mTitle}" getiriliyor...`, 'info');
+            fetchFullMovieByTmdbId(mId, mType).then(full => {
+              renderMovie(full);
+              hideStatus();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }).catch(() => searchMovie(mTitle));
+          });
+        });
+      } catch (err) {
+        $('personModalBody').innerHTML = `<p class="text-sm text-rose-300 text-center py-6">Filmografi alınamadı: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // WhatsApp & Pano Paylaşım Metni
+    function buildShareMessage(movie) {
+      const verdict = computeVerdict(movie, currentLens);
+      const imdbStr = movie.imdb ? `${Number(movie.imdb).toFixed(1)}/10` : '—';
+      const rtStr = (movie.rt !== null && movie.rt !== undefined) ? `%${movie.rt}` : (movie.metascore ? `${movie.metascore}/100` : '—');
+      const platforms = (movie.watchProviders?.flatrate || []).map(p => p.name);
+      const platLine = platforms.length ? `📺 Türkiye Platform: ${platforms.join(', ')}` : '📺 Türkiye Platform: JustWatch üzerinden kontrol edebilirsin';
+      const note = buildTurkishCriticNote(movie, verdict);
+      const shareUrl = (window.location.href && window.location.href.startsWith('https://'))
+        ? window.location.href
+        : 'https://jsparrow601-ship-it.github.io/sinekritik/';
+
+      return `${movie.mediaType === 'tv' ? '📺' : '🎬'} *${movie.title}* (${movie.year || '—'})${movie.mediaType === 'tv' && movie.runtime ? ' • ' + movie.runtime : ''}
+⭐ IMDb: ${imdbStr} | 🍅 RT: ${rtStr} | 🎯 SineKritik: ${verdict.score}/100 (${verdict.label})
+${platLine}
+💬 ${note}
+🔗 ${shareUrl}`;
+    }
+
+    function updateShareLinks(movie) {
+      const msg = buildShareMessage(movie);
+      $('shareWhatsappBtn').href = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    }
+
+    // İzledim & Kişisel Puanlama
+    function updateWatchedButton() {
+      if (!currentMovie) return;
+      const entry = getWatchedList().find(m => m.id === currentMovie.id);
+      const btn = $('toggleWatchedBtn');
+      if (entry) {
+        btn.textContent = `★ İzledim (${entry.personalScore}/10)`;
+        btn.classList.add('border-emerald-500/50', 'text-emerald-300', 'bg-emerald-500/10');
+      } else {
+        btn.textContent = '✓ İzledim / Puanla';
+        btn.classList.remove('border-emerald-500/50', 'text-emerald-300', 'bg-emerald-500/10');
+      }
+    }
+
+    function renderPersonalScorePicker() {
+      const picker = $('personalScorePicker');
+      picker.innerHTML = Array.from({ length: 10 }, (_, i) => i + 1).map(num => `
+        <button type="button" data-pscore="${num}"
+          class="py-2 rounded-lg text-xs font-bold border transition ${
+            num === pendingPersonalScore
+              ? 'bg-emerald-500 border-emerald-400 text-slate-950'
+              : 'bg-cinema-card border-cinema-border text-slate-300 hover:border-slate-500'
+          }">${num}</button>
+      `).join('');
+
+      picker.querySelectorAll('[data-pscore]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          pendingPersonalScore = Number(btn.dataset.pscore);
+          renderPersonalScorePicker();
+        });
+      });
+    }
+
+    function openWatchedModalForCurrent() {
+      if (!currentMovie) return;
+      const existing = getWatchedList().find(m => m.id === currentMovie.id);
+      pendingPersonalScore = existing ? existing.personalScore : 8;
+      $('watchedModalTitle').textContent = currentMovie.title;
+      $('personalNoteInput').value = existing ? (existing.note || '') : '';
+      $('removeWatchedBtn').classList.toggle('hidden', !existing);
+      renderPersonalScorePicker();
+      $('watchedRateModal').classList.remove('hidden');
+    }
+
+    // PWA Özel PNG İkonu & Tam Ekran Manifest (Tek dosyadan çalışır)
+    function initPwaIconAndManifest() {
+      try {
+        const createIconPng = (size) => {
+          const canvas = document.createElement('canvas');
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return '';
+          ctx.fillStyle = '#0b0f19';
+          ctx.fillRect(0, 0, size, size);
+
+          const pad = Math.round(size * 0.11);
+          const box = size - pad * 2;
+          const r = Math.round(size * 0.18);
+          const grad = ctx.createLinearGradient(pad, pad, size - pad, size - pad);
+          grad.addColorStop(0, '#e11d48');
+          grad.addColorStop(1, '#f59e0b');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.moveTo(pad + r, pad);
+          ctx.lineTo(pad + box - r, pad);
+          ctx.quadraticCurveTo(pad + box, pad, pad + box, pad + r);
+          ctx.lineTo(pad + box, pad + box - r);
+          ctx.quadraticCurveTo(pad + box, pad + box, pad + box - r, pad + box);
+          ctx.lineTo(pad + r, pad + box);
+          ctx.quadraticCurveTo(pad, pad + box, pad, pad + box - r);
+          ctx.lineTo(pad, pad + r);
+          ctx.quadraticCurveTo(pad, pad, pad + r, pad);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = `900 ${Math.round(size * 0.52)}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('S', size / 2, size / 2 + Math.round(size * 0.03));
+          return canvas.toDataURL('image/png');
+        };
+
+        const icon192 = createIconPng(192);
+        const icon512 = createIconPng(512);
+        if (icon512) {
+          $('appleTouchIcon').href = icon512;
+        }
+        const manifestObj = {
+          name: 'SineKritik — Türkçe Film Eleştirmeni',
+          short_name: 'SineKritik',
+          start_url: '.',
+          display: 'standalone',
+          background_color: '#0b0f19',
+          theme_color: '#0b0f19',
+          icons: [
+            ...(icon192 ? [{ src: icon192, sizes: '192x192', type: 'image/png' }] : []),
+            ...(icon512 ? [{ src: icon512, sizes: '512x512', type: 'image/png' }] : [])
+          ]
+        };
+        const blob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+        $('pwaManifestLink').href = URL.createObjectURL(blob);
+      } catch {}
+    }
+
+        // İzleme Listesi
+    function updateWatchlistButton() {
+      if (!currentMovie) return;
+      const list = getWatchlist();
+      const exists = list.some(m => m.id === currentMovie.id);
+      const btn = $('toggleWatchlistBtn');
+      if (exists) {
+        btn.textContent = '✓ İzleme Listemde';
+        btn.classList.add('border-emerald-500/50', 'text-emerald-300');
+      } else {
+        btn.textContent = '+ İzleme Listeme Ekle';
+        btn.classList.remove('border-emerald-500/50', 'text-emerald-300');
+      }
+    }
+
+    function renderWatchlistModal() {
+      const isWatched = activeListModalTab === 'watched';
+      $('modalTabWatchlist').className = `px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+        !isWatched ? 'bg-rose-600 text-white' : 'text-slate-300 hover:text-white'
+      }`;
+      $('modalTabWatched').className = `px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+        isWatched ? 'bg-emerald-600 text-white' : 'text-slate-300 hover:text-white'
+      }`;
+
+      const body = $('watchlistBody');
+      if (!isWatched) {
+        const list = getWatchlist();
+        if (!list.length) {
+          body.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">İzleme listen henüz boş.</p>';
+          return;
+        }
+        body.innerHTML = list.map((item, idx) => `
+          <div class="flex items-center justify-between gap-3 rounded-xl bg-cinema-card border border-cinema-border p-3">
+            <button type="button" data-wl-open="${idx}" class="text-left flex-1 min-w-0">
+              <div class="text-sm font-bold text-white truncate hover:text-rose-300">${escapeHtml(item.title)}</div>
+              <div class="text-xs text-slate-400">${escapeHtml(item.year || '')} ${item.imdb ? `• IMDb ${Number(item.imdb).toFixed(1)}` : ''}</div>
+            </button>
+            <button type="button" data-wl-del="${idx}" class="px-2 py-1 rounded-lg text-xs text-slate-400 hover:bg-rose-500/20 hover:text-rose-300">Sil</button>
+          </div>
+        `).join('');
+
+        body.querySelectorAll('[data-wl-open]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const item = list[Number(btn.dataset.wlOpen)];
+            $('watchlistModal').classList.add('hidden');
+            if (item.tmdbId) {
+              showStatus(`"${item.title}" getiriliyor...`, 'info');
+              fetchFullMovieByTmdbId(item.tmdbId, item.mediaType || 'movie').then(full => { renderMovie(full); hideStatus(); });
+            } else {
+              searchMovie(item.title);
+            }
+          });
+        });
+
+        body.querySelectorAll('[data-wl-del]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const next = getWatchlist().filter((_, i) => i !== Number(btn.dataset.wlDel));
+            saveWatchlist(next);
+            renderWatchlistModal();
+            updateWatchlistButton();
+          });
+        });
+      } else {
+        const list = getWatchedList();
+        if (!list.length) {
+          body.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">Henüz izlediğin bir filmi işaretlemedin.</p>';
+          return;
+        }
+        body.innerHTML = list.map((item, idx) => `
+          <div class="rounded-xl bg-cinema-card border border-cinema-border p-3 space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <button type="button" data-watched-open="${idx}" class="text-left flex-1 min-w-0">
+                <div class="text-sm font-bold text-white truncate hover:text-emerald-300">${escapeHtml(item.title)}</div>
+                <div class="text-xs text-slate-400">${escapeHtml(item.year || '')} • <span class="text-emerald-300 font-semibold">Puanın: ${item.personalScore}/10</span></div>
+              </button>
+              <button type="button" data-watched-del="${idx}" class="px-2 py-1 rounded-lg text-xs text-slate-400 hover:bg-rose-500/20 hover:text-rose-300 shrink-0">Sil</button>
+            </div>
+            ${item.note ? `<p class="text-xs text-slate-300 bg-cinema-surface/80 rounded-lg px-2.5 py-1.5 border border-cinema-border/60">"${escapeHtml(item.note)}"</p>` : ''}
+          </div>
+        `).join('');
+
+        body.querySelectorAll('[data-watched-open]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const item = list[Number(btn.dataset.watchedOpen)];
+            $('watchlistModal').classList.add('hidden');
+            if (item.tmdbId) {
+              showStatus(`"${item.title}" getiriliyor...`, 'info');
+              fetchFullMovieByTmdbId(item.tmdbId, item.mediaType || 'movie').then(full => { renderMovie(full); hideStatus(); });
+            } else {
+              searchMovie(item.title);
+            }
+          });
+        });
+
+        body.querySelectorAll('[data-watched-del]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const next = getWatchedList().filter((_, i) => i !== Number(btn.dataset.watchedDel));
+            saveWatchedList(next);
+            renderWatchlistModal();
+            updateWatchedButton();
+          });
+        });
+      }
+    }
+
+    // Olay Dinleyicileri
+    $('searchForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      searchMovie($('movieInput').value);
+    });
+
+    $('mediaTypeMovieBtn').addEventListener('click', () => switchMediaType('movie'));
+    $('mediaTypeTvBtn').addEventListener('click', () => switchMediaType('tv'));
+
+    $('tabSingleMode').addEventListener('click', () => switchDiscoveryTab('single'));
+    $('tabJointMode').addEventListener('click', () => switchDiscoveryTab('joint'));
+
+    $('moodBtn').addEventListener('click', () => recommendByMood($('moodInput').value));
+    $('moodInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        recommendByMood($('moodInput').value);
+      }
+    });
+
+    document.querySelectorAll('.mood-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        $('moodInput').value = chip.dataset.mood;
+        recommendByMood(chip.dataset.mood);
+      });
+    });
+
+    $('jointBtn').addEventListener('click', () => recommendJointMovie($('jointInput1').value, $('jointInput2').value));
+    ['jointInput1', 'jointInput2'].forEach(id => {
+      $(id).addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          recommendJointMovie($('jointInput1').value, $('jointInput2').value);
+        }
+      });
+    });
+
+    document.querySelectorAll('.joint-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        $('jointInput1').value = chip.dataset.joint1;
+        $('jointInput2').value = chip.dataset.joint2;
+        recommendJointMovie(chip.dataset.joint1, chip.dataset.joint2);
+      });
+    });
+
+    $('refreshSimilarBtn').addEventListener('click', async () => {
+      if (!currentMovie || !Array.isArray(currentMovie.similarPool) || currentMovie.similarPool.length <= 3) return;
+      const btn = $('refreshSimilarBtn');
+      btn.disabled = true;
+      btn.textContent = 'Yükleniyor...';
+      try {
+        let start = currentMovie.similarOffset || 0;
+        if (start >= currentMovie.similarPool.length) start = 0;
+        let nextRaw = currentMovie.similarPool.slice(start, start + 3);
+        if (nextRaw.length < 3) {
+          nextRaw = [...nextRaw, ...currentMovie.similarPool.slice(0, 3 - nextRaw.length)];
+          currentMovie.similarOffset = 3 - (currentMovie.similarPool.length - start);
+        } else {
+          currentMovie.similarOffset = start + 3;
+        }
+        const hydrated = await hydrateSimilarBatch(nextRaw, currentMovie.mediaType || 'movie');
+        currentMovie.similar = hydrated;
+        renderSimilarList(hydrated, true);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Farklı 3 Öneri ↻';
+      }
+    });
+
+        $('anotherMoodBtn').addEventListener('click', () => {
+      if (activeRecMode === 'joint') {
+        recommendJointMovie(lastJointQueries.p1 || $('jointInput1').value, lastJointQueries.p2 || $('jointInput2').value);
+      } else {
+        recommendByMood(lastSingleQuery || $('moodInput').value || 'düşünceli');
+      }
+    });
+
+    document.querySelectorAll('.lens-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentLens = btn.dataset.lens;
+        updateVerdictUI();
+      });
+    });
+
+    $('toggleWatchlistBtn').addEventListener('click', () => {
+      if (!currentMovie) return;
+      const list = getWatchlist();
+      const exists = list.some(m => m.id === currentMovie.id);
+      if (exists) {
+        saveWatchlist(list.filter(m => m.id !== currentMovie.id));
+      } else {
+        list.unshift({
+          id: currentMovie.id,
+          tmdbId: currentMovie.tmdbId,
+          mediaType: currentMovie.mediaType || 'movie',
+          title: currentMovie.title,
+          year: currentMovie.year,
+          imdb: currentMovie.imdb
+        });
+        saveWatchlist(list);
+      }
+      updateWatchlistButton();
+    });
+
+    $('openWatchlistBtn').addEventListener('click', () => {
+      renderWatchlistModal();
+      $('watchlistModal').classList.remove('hidden');
+    });
+
+    $('openSettingsBtn').addEventListener('click', () => {
+      $('tmdbKeyInput').value = getTmdbKey();
+      $('omdbKeyInput').value = getOmdbKey();
+      $('testResultBox').classList.add('hidden');
+      $('settingsModal').classList.remove('hidden');
+    });
+
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => $(btn.dataset.closeModal).classList.add('hidden'));
+    });
+
+    $('saveApiBtn').addEventListener('click', () => {
+      safeSetStorage('sinekritik_tmdb_key', $('tmdbKeyInput').value.trim());
+      safeSetStorage('sinekritik_omdb_key', $('omdbKeyInput').value.trim());
+      $('settingsModal').classList.add('hidden');
+      showStatus('API ayarları kaydedildi.', 'success');
+    });
+
+    $('testApiBtn').addEventListener('click', async () => {
+      const box = $('testResultBox');
+      box.className = 'rounded-xl border border-cinema-border bg-cinema-bg px-3 py-2.5 text-xs text-slate-300';
+      box.textContent = 'TMDb ve OMDb bağlantıları test ediliyor...';
+      box.classList.remove('hidden');
+
+      safeSetStorage('sinekritik_tmdb_key', $('tmdbKeyInput').value.trim());
+      safeSetStorage('sinekritik_omdb_key', $('omdbKeyInput').value.trim());
+
+      const notes = [];
+      try {
+        await tmdbFetch('/configuration');
+        notes.push('TMDb: Çalışıyor ✓');
+      } catch (e) {
+        notes.push(`TMDb: Hata (${e.message})`);
+      }
+
+      try {
+        const omdbTest = await omdbFetch({ imdbId: 'tt1375666' });
+        if (omdbTest) {
+          const r = extractOmdbRatings(omdbTest);
+          notes.push(`OMDb: Çalışıyor ✓ (Inception IMDb ${r.imdb || '-'}, RT %${r.rt || '-'})`);
+        } else {
+          notes.push('OMDb: Yanıt alınamadı (e-postadaki aktivasyon linkine tıklandığından emin ol).');
+        }
+      } catch {
+        notes.push('OMDb: Bağlantı hatası.');
+      }
+
+      box.textContent = notes.join(' | ');
+    });
+
+    $('modalTabWatchlist').addEventListener('click', () => {
+      activeListModalTab = 'watchlist';
+      renderWatchlistModal();
+    });
+
+    $('modalTabWatched').addEventListener('click', () => {
+      activeListModalTab = 'watched';
+      renderWatchlistModal();
+    });
+
+    $('toggleWatchedBtn').addEventListener('click', openWatchedModalForCurrent);
+
+    $('saveWatchedBtn').addEventListener('click', () => {
+      if (!currentMovie) return;
+      const list = getWatchedList().filter(m => m.id !== currentMovie.id);
+      list.unshift({
+        id: currentMovie.id,
+        tmdbId: currentMovie.tmdbId,
+        mediaType: currentMovie.mediaType || 'movie',
+        title: currentMovie.title,
+        year: currentMovie.year,
+        personalScore: pendingPersonalScore,
+        note: $('personalNoteInput').value.trim(),
+        watchedAt: new Date().toISOString().slice(0, 10)
+      });
+      saveWatchedList(list);
+      // İzlediyse izleme listesinden otomatik düşür
+      saveWatchlist(getWatchlist().filter(m => m.id !== currentMovie.id));
+      $('watchedRateModal').classList.add('hidden');
+      updateWatchedButton();
+      updateWatchlistButton();
+      showStatus(`"${currentMovie.title}" izlediklerin listesine (${pendingPersonalScore}/10) kaydedildi.`, 'success');
+    });
+
+    $('removeWatchedBtn').addEventListener('click', () => {
+      if (!currentMovie) return;
+      saveWatchedList(getWatchedList().filter(m => m.id !== currentMovie.id));
+      $('watchedRateModal').classList.add('hidden');
+      updateWatchedButton();
+    });
+
+    $('copySummaryBtn').addEventListener('click', async () => {
+      if (!currentMovie) return;
+      const text = buildShareMessage(currentMovie);
+      const btn = $('copySummaryBtn');
+      let copied = false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          copied = true;
+        }
+      } catch {}
+      if (!copied) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          copied = true;
+        } catch {}
+      }
+      if (copied) {
+        btn.textContent = '✓ Kopyalandı';
+        setTimeout(() => { btn.textContent = 'Özeti Kopyala'; }, 2000);
+      }
+    });
+
+    // Başlangıç
+    updateWatchlistBadge();
+    renderPlatformCheckboxes();
+    updatePlatformHint();
+    syncTrPlatformIds();
+    initPwaIconAndManifest();
+  </script>
+</body>
+</html>
